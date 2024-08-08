@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package api.v1.examples;
+
+option go_package = "github.com/asjard/examples/protobuf/cipherpb";
+
+import "github.com/asjard/protobuf/http.proto";
+import "google/protobuf/empty.proto";
+
+// Cipher 加解密相关接口
+service Cipher {
+    option (asjard.api.serviceHttp) = {
+        group : "examples/cipher"
+    };
+    // 加密
+    rpc Encrypt(EncryptReq) returns (EncryptResp) {
+        option (asjard.api.http) = {
+            get : "/encrypt"
+        };
+    };
+    // 解密
+    rpc Decrypt(google.protobuf.Empty) returns (DecryptResp) {
+        option (asjard.api.http) = {
+            get : "/decrypt"
+        };
+    };
+}
+
+// 加解密示例返回
+message DecryptResp {
+    // 明文文件中的aes加密值
+    string aes_encrypt_value_in_plain_file          = 1;
+    // 明文文件中的base64加密值
+    string base64_encrypt_value_in_plain_file       = 2;
+    // aes加密文件中的明文值
+    string plain_value_in_aes_encrypt_file          = 3;
+    // aes加密文件中的aes加密值
+    string aes_encrypt_value_in_aes_encrypt_file    = 4;
+    // aes加密文件中的base64加密值
+    string base64_encrypt_value_in_aes_encrypt_file = 5;
+}
+
+// 加密请求
+message EncryptReq {
+    // 明文
+    string plain_text = 1;
+}
+
+// 加密返回
+message EncryptResp {
+    // 密文
+    string secret_text = 2;
+}

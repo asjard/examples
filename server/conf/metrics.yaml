@@ -1,0 +1,5 @@
+asjard:
+  metrics:
+    enabled: true
+    pushGateway:
+      endpoint: http://host.docker.internal:9091
