@@ -2,4 +2,4 @@ asjard:
   metrics:
     enabled: true
     pushGateway:
-      endpoint: http://host.docker.internal:9091
+      endpoint: http://127.0.0.1:9091
