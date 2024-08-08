@@ -640,6 +640,8 @@ github.com/apache/arrow/go/v11 v11.0.0/go.mod h1:Eg5OsL5H+e299f7u5ssuXsuHQVEGC4x
 github.com/apache/thrift v0.16.0/go.mod h1:PHK3hniurgQaNMZYaCLEqXKsYK8upmhPbmdP2FXSqgU=
 github.com/asjard/asjard v0.1.0 h1:BlVzpNIJ4aphVBdYERd0D+hKbPwuV+hEtotBj+Ai1KQ=
 github.com/asjard/asjard v0.1.0/go.mod h1:o2E4BKvNUnWeoOj4lU5lMwZKmt69KSD4ZWeyqw7DeVQ=
+github.com/asjard/asjard v0.1.1-0.20240808085639-7e831ad6818b h1:2OgxFbQH+BSTMn7TglCNJ8psysftNqixhtJ3dwG/0FE=
+github.com/asjard/asjard v0.1.1-0.20240808085639-7e831ad6818b/go.mod h1:o2E4BKvNUnWeoOj4lU5lMwZKmt69KSD4ZWeyqw7DeVQ=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
 github.com/boombuler/barcode v1.0.0/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
