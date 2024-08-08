@@ -41,5 +41,4 @@ gen_proto: ## 生成protobuf目录下的协议
 run: $(examples) ## 运行example
 
 $(examples):
-	echo $@
 	ASJARD_CONF_DIR=$(PWD)/$@/conf go run $@/main.go
