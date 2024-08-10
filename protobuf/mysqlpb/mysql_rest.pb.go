@@ -20,7 +20,7 @@ func _Mysql_Create_RestHandler(ctx *rest.Context, srv any, interceptor server.Un
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Mysql.Create",
+		FullMethod: Mysql_Create_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -37,7 +37,7 @@ func _Mysql_Update_RestHandler(ctx *rest.Context, srv any, interceptor server.Un
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Mysql.Update",
+		FullMethod: Mysql_Update_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -54,7 +54,7 @@ func _Mysql_Get_RestHandler(ctx *rest.Context, srv any, interceptor server.Unary
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Mysql.Get",
+		FullMethod: Mysql_Get_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -71,7 +71,7 @@ func _Mysql_Search_RestHandler(ctx *rest.Context, srv any, interceptor server.Un
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Mysql.Search",
+		FullMethod: Mysql_Search_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -88,7 +88,7 @@ func _Mysql_Del_RestHandler(ctx *rest.Context, srv any, interceptor server.Unary
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Mysql.Del",
+		FullMethod: Mysql_Del_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -144,11 +144,11 @@ var MysqlRestServiceDesc = rest.ServiceDesc{
 }
 
 const (
+	Mysql_Create_RestPath = "/api/v1/examples/mysql"
+	Mysql_Update_RestPath = "/api/v1/examples/mysql/{name}"
 	Mysql_Get_RestPath    = "/api/v1/examples/mysql/{name}"
 	Mysql_Search_RestPath = "/api/v1/examples/mysql"
 	Mysql_Del_RestPath    = "/api/v1/examples/mysql/mysql/{name}"
-	Mysql_Create_RestPath = "/api/v1/examples/mysql"
-	Mysql_Update_RestPath = "/api/v1/examples/mysql/{name}"
 )
 
 var file_mysql_proto_openapi = []byte{

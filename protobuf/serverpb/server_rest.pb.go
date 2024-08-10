@@ -20,7 +20,7 @@ func _Server_Say_RestHandler(ctx *rest.Context, srv any, interceptor server.Unar
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Server.Say",
+		FullMethod: Server_Say_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -37,7 +37,7 @@ func _Server_Hello_RestHandler(ctx *rest.Context, srv any, interceptor server.Un
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Server.Hello",
+		FullMethod: Server_Hello_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -54,7 +54,7 @@ func _Server_Log_RestHandler(ctx *rest.Context, srv any, interceptor server.Unar
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Server.Log",
+		FullMethod: Server_Log_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -110,11 +110,11 @@ var ServerRestServiceDesc = rest.ServiceDesc{
 }
 
 const (
-	Server_Log_RestPath     = "/api/v1/examples/server/log"
 	Server_Say_RestPath     = "/api/v1/examples/server/region/{region_id}/project/{project_id}/user/{user_id}"
 	Server_Say_RestPath_1   = "/api/v1/examples/server/region/{region_id}/project/{project_id}/user/{user_id}"
 	Server_Hello_RestPath   = "/api/v1/examples/server/hello"
 	Server_Hello_RestPath_1 = "/hello"
+	Server_Log_RestPath     = "/api/v1/examples/server/log"
 )
 
 var file_server_proto_openapi = []byte{

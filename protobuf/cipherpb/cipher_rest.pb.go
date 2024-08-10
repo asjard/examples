@@ -21,7 +21,7 @@ func _Cipher_Encrypt_RestHandler(ctx *rest.Context, srv any, interceptor server.
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Cipher.Encrypt",
+		FullMethod: Cipher_Encrypt_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -38,7 +38,7 @@ func _Cipher_Decrypt_RestHandler(ctx *rest.Context, srv any, interceptor server.
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.Cipher.Decrypt",
+		FullMethod: Cipher_Decrypt_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -75,8 +75,8 @@ var CipherRestServiceDesc = rest.ServiceDesc{
 }
 
 const (
-	Cipher_Encrypt_RestPath = "/api/v1/examples/cipher/encrypt"
 	Cipher_Decrypt_RestPath = "/api/v1/examples/cipher/decrypt"
+	Cipher_Encrypt_RestPath = "/api/v1/examples/cipher/encrypt"
 )
 
 var file_cipher_proto_openapi = []byte{

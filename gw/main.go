@@ -9,18 +9,18 @@ import (
 	"github.com/asjard/asjard"
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
-	pb "github.com/asjard/asjard/examples/protobuf/hello"
 	_ "github.com/asjard/asjard/pkg/registry/etcd"
 	"github.com/asjard/asjard/pkg/server/rest"
+	pb "github.com/asjard/examples/protobuf/serverpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-var _ pb.HelloServer = &pb.HelloAPI{}
-var _ rest.Handler = &pb.HelloAPI{}
+var _ pb.ServerServer = &pb.ServerAPI{}
+var _ rest.Handler = &pb.ServerAPI{}
 
 type Rewrite struct {
-	*pb.HelloAPI
+	*pb.ServerAPI
 	exit <-chan struct{}
 }
 
@@ -55,8 +55,8 @@ func (api Rewrite) Log(ctx context.Context, in *emptypb.Empty) (*emptypb.Empty, 
 func main() {
 	server := asjard.New()
 	server.AddHandler(&Rewrite{
-		HelloAPI: &pb.HelloAPI{},
-		exit:     server.Exit(),
+		ServerAPI: &pb.ServerAPI{},
+		exit:      server.Exit(),
 	}, rest.Protocol)
 	if err := server.Start(); err != nil {
 		panic(err)

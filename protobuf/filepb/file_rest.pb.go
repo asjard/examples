@@ -20,7 +20,7 @@ func _File_Upload_RestHandler(ctx *rest.Context, srv any, interceptor server.Una
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.File.Upload",
+		FullMethod: File_Upload_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {
@@ -37,7 +37,7 @@ func _File_Download_RestHandler(ctx *rest.Context, srv any, interceptor server.U
 	}
 	info := &server.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "api.v1.examples.File.Download",
+		FullMethod: File_Download_FullMethodName,
 		Protocol:   rest.Protocol,
 	}
 	handler := func(ctx context.Context, req any) (any, error) {

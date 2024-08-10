@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"github.com/asjard/asjard"
+	"github.com/asjard/asjard/core/client"
+	"github.com/asjard/asjard/core/config"
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
 	"github.com/asjard/asjard/pkg/server/grpc"
@@ -15,17 +17,35 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
+type traceContextKeyType int
+
+const (
+	currentSpanKey traceContextKeyType = iota
+)
+
 type ServerAPI struct {
 	serverpb.UnimplementedServerServer
-	exit <-chan struct{}
+	exit   <-chan struct{}
+	client serverpb.ServerClient
 }
 
+func (api *ServerAPI) Bootstrap() error {
+	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.examples.name", "server")).Conn()
+	if err != nil {
+		return err
+	}
+	api.client = serverpb.NewServerClient(conn)
+	return nil
+}
+
+func (ServerAPI) Shutdown() {}
+
 func (api *ServerAPI) Say(ctx context.Context, in *serverpb.HelloReq) (*serverpb.HelloReq, error) {
-	return &serverpb.HelloReq{}, nil
+	return in, nil
 }
 
 func (api *ServerAPI) Hello(ctx context.Context, in *emptypb.Empty) (*serverpb.HelloReq, error) {
-	return &serverpb.HelloReq{}, nil
+	return api.client.Say(ctx, &serverpb.HelloReq{})
 }
 
 // Log SSE请求
