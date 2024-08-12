@@ -5,6 +5,8 @@ import (
 
 	"github.com/asjard/asjard"
 	"github.com/asjard/asjard/core/bootstrap"
+	_ "github.com/asjard/asjard/pkg/registry/etcd"
+	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/mysql/apis"
 	"github.com/asjard/examples/mysql/model"
@@ -29,7 +31,7 @@ func init() {
 
 func main() {
 	server := asjard.New()
-	server.AddHandler(apis.NewExampleAPI(), rest.Protocol)
+	server.AddHandler(apis.NewExampleAPI(), rest.Protocol, grpc.Protocol)
 	if err := server.Start(); err != nil {
 		log.Println(err.Error())
 	}

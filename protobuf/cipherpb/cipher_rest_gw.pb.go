@@ -21,7 +21,7 @@ type CipherAPI struct {
 }
 
 func (api *CipherAPI) Bootstrap() error {
-	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.examples.name", "examples")).Conn()
+	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.cipher.name", "cipher")).Conn()
 	if err != nil {
 		return err
 	}

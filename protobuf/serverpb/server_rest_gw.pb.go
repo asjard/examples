@@ -21,7 +21,7 @@ type ServerAPI struct {
 }
 
 func (api *ServerAPI) Bootstrap() error {
-	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.examples.name", "examples")).Conn()
+	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.server.name", "server")).Conn()
 	if err != nil {
 		return err
 	}

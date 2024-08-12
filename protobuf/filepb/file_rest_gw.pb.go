@@ -21,7 +21,7 @@ type FileAPI struct {
 }
 
 func (api *FileAPI) Bootstrap() error {
-	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.examples.name", "examples")).Conn()
+	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.file.name", "file")).Conn()
 	if err != nil {
 		return err
 	}

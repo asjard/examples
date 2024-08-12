@@ -1,0 +1,58 @@
+version: "3"
+networks:
+  example:
+
+services:
+  etcd:
+    image: bitnami/etcd:latest
+    restart: always
+    networks:
+      - example
+    environment:
+      ALLOW_NONE_AUTHENTICATION: yes
+  etcdkeeper:
+    image: deltaprojects/etcdkeeper:latest
+    restart: always
+    networks:
+      - example
+    ports:
+      - 8080:8080
+  mariadb:
+    image: mariadb
+    restart: always
+    networks:
+      - example
+    # ports:
+    # - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: example-database
+      TZ: "Asia/Shanghai"
+  redis:
+    image: redis
+    restart: always
+    networks:
+      - example
+    # ports:
+    # - 6379:6379
+  jeager:
+    image: jaegertracing/all-in-one:latest
+    restart: always
+    networks:
+      - example
+    ports:
+      - 16686:16686
+    environment:
+      COLLECTOR_ZIPKIN_HTTP_PORT: 9441
+  prometheus:
+    image: bitnami/prometheus:latest
+    restart: always
+    networks:
+      - example
+    volumes:
+      - ./prometheus.yaml:/opt/bitnami/prometheus/conf/prometheus.yml
+    external_links:
+      - asjard-pushgateway-1:pushgateway
+  pushgateway:
+    image: bitnami/pushgateway:latest
+    restart: always

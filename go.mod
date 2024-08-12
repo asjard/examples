@@ -2,7 +2,7 @@ module github.com/asjard/examples
 
 go 1.21
 
-//replace github.com/asjard/asjard => ../asjard
+replace github.com/asjard/asjard => ../asjard
 
 require (
 	github.com/asjard/asjard v0.1.1-0.20240810135046-18d50283bc55
@@ -61,6 +61,8 @@ require (
 	github.com/prometheus/client_model v0.5.0 // indirect
 	github.com/prometheus/common v0.48.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
+	github.com/redis/go-redis/extra/rediscmd/v9 v9.0.5 // indirect
+	github.com/redis/go-redis/extra/redisotel/v9 v9.0.5 // indirect
 	github.com/redis/go-redis/v9 v9.6.1 // indirect
 	github.com/savsgio/gotils v0.0.0-20240303185622-093b76447511 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
@@ -97,4 +99,5 @@ require (
 	gorm.io/driver/postgres v1.5.9 // indirect
 	gorm.io/driver/sqlite v1.5.6 // indirect
 	gorm.io/driver/sqlserver v1.5.3 // indirect
+	gorm.io/plugin/opentelemetry v0.1.4 // indirect
 )

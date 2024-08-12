@@ -1,0 +1,8 @@
+asjard:
+  ## 数据相关配置
+  database:
+    etcd:
+      clients:
+        default:
+          endpoints:
+            - "etcd:2379"

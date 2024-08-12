@@ -9,8 +9,11 @@ import (
 	"github.com/asjard/asjard"
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
+	_ "github.com/asjard/asjard/pkg/config/etcd"
 	_ "github.com/asjard/asjard/pkg/registry/etcd"
 	"github.com/asjard/asjard/pkg/server/rest"
+	"github.com/asjard/examples/protobuf/cipherpb"
+	"github.com/asjard/examples/protobuf/mysqlpb"
 	pb "github.com/asjard/examples/protobuf/serverpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -54,10 +57,12 @@ func (api Rewrite) Log(ctx context.Context, in *emptypb.Empty) (*emptypb.Empty, 
 
 func main() {
 	server := asjard.New()
-	server.AddHandler(&Rewrite{
+	server.AddHandlers(rest.Protocol, &Rewrite{
 		ServerAPI: &pb.ServerAPI{},
 		exit:      server.Exit(),
-	}, rest.Protocol)
+	},
+		&mysqlpb.MysqlAPI{},
+		&cipherpb.CipherAPI{})
 	if err := server.Start(); err != nil {
 		panic(err)
 	}

@@ -20,10 +20,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Server_Say_FullMethodName   = "/api.v1.examples.Server/Say"
-	Server_Hello_FullMethodName = "/api.v1.examples.Server/Hello"
-	Server_Log_FullMethodName   = "/api.v1.examples.Server/Log"
-	Server_Call_FullMethodName  = "/api.v1.examples.Server/Call"
+	Server_Say_FullMethodName   = "/api.v1.server.Server/Say"
+	Server_Hello_FullMethodName = "/api.v1.server.Server/Hello"
+	Server_Log_FullMethodName   = "/api.v1.server.Server/Log"
+	Server_Call_FullMethodName  = "/api.v1.server.Server/Call"
 )
 
 // ServerClient is the client API for Server service.
@@ -202,7 +202,7 @@ func _Server_Call_Handler(srv interface{}, ctx context.Context, dec func(interfa
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Server_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.v1.examples.Server",
+	ServiceName: "api.v1.server.Server",
 	HandlerType: (*ServerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

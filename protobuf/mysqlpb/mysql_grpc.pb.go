@@ -20,11 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Mysql_Create_FullMethodName = "/api.v1.examples.Mysql/Create"
-	Mysql_Update_FullMethodName = "/api.v1.examples.Mysql/Update"
-	Mysql_Get_FullMethodName    = "/api.v1.examples.Mysql/Get"
-	Mysql_Search_FullMethodName = "/api.v1.examples.Mysql/Search"
-	Mysql_Del_FullMethodName    = "/api.v1.examples.Mysql/Del"
+	Mysql_Create_FullMethodName = "/api.v1.mysql.Mysql/Create"
+	Mysql_Update_FullMethodName = "/api.v1.mysql.Mysql/Update"
+	Mysql_Get_FullMethodName    = "/api.v1.mysql.Mysql/Get"
+	Mysql_Search_FullMethodName = "/api.v1.mysql.Mysql/Search"
+	Mysql_Del_FullMethodName    = "/api.v1.mysql.Mysql/Del"
 )
 
 // MysqlClient is the client API for Mysql service.
@@ -239,7 +239,7 @@ func _Mysql_Del_Handler(srv interface{}, ctx context.Context, dec func(interface
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Mysql_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.v1.examples.Mysql",
+	ServiceName: "api.v1.mysql.Mysql",
 	HandlerType: (*MysqlServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/asjard/asjard/pkg/protobuf/requestpb"
+	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/mysql/model"
 	"github.com/asjard/examples/mysql/model/xerr"
@@ -67,6 +68,10 @@ func (api *ExampleAPI) Del(ctx context.Context, in *pb.ReqWithName) (*emptypb.Em
 
 func (api *ExampleAPI) RestServiceDesc() *rest.ServiceDesc {
 	return &pb.MysqlRestServiceDesc
+}
+
+func (api *ExampleAPI) GrpcServiceDesc() *grpc.ServiceDesc {
+	return &pb.Mysql_ServiceDesc
 }
 
 func (api *ExampleAPI) isNameValid(name string) error {

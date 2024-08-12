@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package api.v1.examples;
+package api.v1.cipher;
 
 option go_package = "github.com/asjard/examples/protobuf/cipherpb";
 

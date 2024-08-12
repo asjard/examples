@@ -20,8 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Cipher_Encrypt_FullMethodName = "/api.v1.examples.Cipher/Encrypt"
-	Cipher_Decrypt_FullMethodName = "/api.v1.examples.Cipher/Decrypt"
+	Cipher_Encrypt_FullMethodName = "/api.v1.cipher.Cipher/Encrypt"
+	Cipher_Decrypt_FullMethodName = "/api.v1.cipher.Cipher/Decrypt"
 )
 
 // CipherClient is the client API for Cipher service.
@@ -134,7 +134,7 @@ func _Cipher_Decrypt_Handler(srv interface{}, ctx context.Context, dec func(inte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Cipher_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.v1.examples.Cipher",
+	ServiceName: "api.v1.cipher.Cipher",
 	HandlerType: (*CipherServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

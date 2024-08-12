@@ -20,8 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	File_Upload_FullMethodName   = "/api.v1.examples.File/Upload"
-	File_Download_FullMethodName = "/api.v1.examples.File/Download"
+	File_Upload_FullMethodName   = "/api.v1.file.File/Upload"
+	File_Download_FullMethodName = "/api.v1.file.File/Download"
 )
 
 // FileClient is the client API for File service.
@@ -134,7 +134,7 @@ func _File_Download_Handler(srv interface{}, ctx context.Context, dec func(inter
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var File_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.v1.examples.File",
+	ServiceName: "api.v1.file.File",
 	HandlerType: (*FileServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

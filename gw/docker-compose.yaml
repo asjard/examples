@@ -1,0 +1,18 @@
+version: "3"
+
+networks:
+  example:
+
+services:
+  gw:
+    build: ./
+    image: examples/gw
+    restart: always
+    ports:
+      - 8030:8030
+    networks:
+      - example
+    external_links:
+      - asjard-etcd-1:etcd
+      - asjard-jeager-1:jaeger
+      - asjard-pushgateway-1:pushgateway
