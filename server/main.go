@@ -53,7 +53,7 @@ func (api *ServerAPI) Hello(ctx context.Context, in *emptypb.Empty) (*serverpb.H
 func (api *ServerAPI) Log(ctx context.Context, in *emptypb.Empty) (*emptypb.Empty, error) {
 	rtx, ok := ctx.(*rest.Context)
 	if !ok {
-		return nil, status.UnsupportProtocol
+		return nil, status.UnsupportProtocol()
 	}
 	rtx.SetContentType("text/event-stream")
 	rtx.SetBodyStreamWriter(func(w *bufio.Writer) {

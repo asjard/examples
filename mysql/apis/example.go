@@ -77,7 +77,7 @@ func (api *ExampleAPI) GrpcServiceDesc() *grpc.ServiceDesc {
 func (api *ExampleAPI) isNameValid(name string) error {
 	v := validator.New()
 	if err := v.Var(name, "required,max=20"); err != nil {
-		return xerr.ErrInvalidName
+		return xerr.ErrInvalidName()
 	}
 	return nil
 }

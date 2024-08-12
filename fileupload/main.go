@@ -33,7 +33,7 @@ func NewFileAPI() *FileAPI {
 func (api *FileAPI) Upload(ctx context.Context, in *filepb.UploadReq) (*filepb.UploadResp, error) {
 	rtx, ok := ctx.(*rest.Context)
 	if !ok {
-		return nil, status.UnsupportProtocol
+		return nil, status.UnsupportProtocol()
 	}
 	fh, err := rtx.FormFile("file")
 	if err != nil {
@@ -43,7 +43,7 @@ func (api *FileAPI) Upload(ctx context.Context, in *filepb.UploadReq) (*filepb.U
 	fileName := uuid.NewString() + filepath.Ext(fh.Filename)
 	if err := fasthttp.SaveMultipartFile(fh, filepath.Join(api.savePath, fileName)); err != nil {
 		logger.Error("save file fail", "err", err)
-		return nil, status.InternalServerError
+		return nil, status.InternalServerError()
 	}
 
 	return &filepb.UploadResp{
@@ -55,7 +55,7 @@ func (api *FileAPI) Upload(ctx context.Context, in *filepb.UploadReq) (*filepb.U
 func (api *FileAPI) Download(ctx context.Context, in *filepb.DownloadReq) (*emptypb.Empty, error) {
 	rtx, ok := ctx.(*rest.Context)
 	if !ok {
-		return nil, status.UnsupportProtocol
+		return nil, status.UnsupportProtocol()
 	}
 	filePath := filepath.Join(api.savePath, in.FileName)
 	if !utils.IsPathExists(filePath) {

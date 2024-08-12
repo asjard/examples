@@ -5,7 +5,7 @@ go 1.21
 //replace github.com/asjard/asjard => ../asjard
 
 require (
-	github.com/asjard/asjard v0.1.1-0.20240812070531-f016b5ef121e
+	github.com/asjard/asjard v0.1.1-0.20240812144027-03f3a211e3f3
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/google/uuid v1.6.0
 	github.com/valyala/fasthttp v1.55.0

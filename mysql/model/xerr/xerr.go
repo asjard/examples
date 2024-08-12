@@ -6,5 +6,7 @@ import (
 )
 
 var (
-	ErrInvalidName = status.Error(codes.InvalidArgument, "invalid name, name is must and max length 20")
+	ErrInvalidName = func() error {
+		return status.Error(codes.InvalidArgument, "invalid name, name is must and max length 20")
+	}
 )

@@ -10,8 +10,16 @@ services:
       no_cache: true
     image: examples/cipher
     restart: always
-    ports:
-      - 9030:9030
+    deploy:
+      mode: replicated
+      replicas: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+    # ports:
+    # - 9030:9030
     environment:
       asjard_cipher_aesCBCPkcs5padding_base64Key: L5XqRRJPm8KLI+EcqUuHHg==
       asjard_cipher_aesCBCPkcs5padding_base64Iv: xKXiw8E1TaXJmjHL6D9+TA==

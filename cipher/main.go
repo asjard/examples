@@ -37,7 +37,7 @@ func (api *CipherAPI) Encrypt(ctx context.Context, in *cipherpb.EncryptReq) (*ci
 	out, err := security.Encrypt(in.PlainText, security.WithCipherName(in.CipherName))
 	if err != nil {
 		logger.Error("encrypt fail", "err", err)
-		return nil, status.InternalServerError
+		return nil, status.InternalServerError()
 	}
 	return &cipherpb.EncryptResp{
 		CipherName: in.CipherName,

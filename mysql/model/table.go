@@ -157,7 +157,7 @@ func (t ExampleTable) Create(ctx context.Context, in *pb.CreateOrUpdateReq) erro
 		Age:  in.Age,
 	}).Error; err != nil {
 		logger.Error("create fail", "name", in.Name, "err", err)
-		return status.InternalServerError
+		return status.InternalServerError()
 	}
 	return nil
 }
@@ -175,7 +175,7 @@ func (t ExampleTable) Update(ctx context.Context, in *pb.CreateOrUpdateReq) (*pb
 		Age:  in.Age,
 	}).Error; err != nil {
 		logger.Error("update record fail", "name", in.Name, "err", err)
-		return nil, status.InternalServerError
+		return nil, status.InternalServerError()
 	}
 	return t.Get(ctx, &pb.ReqWithName{Name: in.Name})
 }
@@ -191,7 +191,7 @@ func (t ExampleTable) Get(ctx context.Context, in *pb.ReqWithName) (*pb.ExampleI
 			return nil, status.Error(codes.NotFound, "record not found")
 		}
 		logger.Error("get record fail", "name", in.Name, "err", err)
-		return nil, status.InternalServerError
+		return nil, status.InternalServerError()
 	}
 	return record.info(), nil
 }
@@ -222,7 +222,7 @@ func (t ExampleTable) Del(ctx context.Context, in *pb.ReqWithName) error {
 	}
 	if err := db.Where("name=?", in.Name).Delete(&ExampleTable{}).Error; err != nil {
 		logger.Error("delete record fail", "name", in.Name, "err", err)
-		return status.InternalServerError
+		return status.InternalServerError()
 	}
 	return nil
 }

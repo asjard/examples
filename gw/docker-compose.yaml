@@ -8,6 +8,11 @@ services:
     build: ./
     image: examples/gw
     restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
     ports:
       - 8030:8030
     networks:

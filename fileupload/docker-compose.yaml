@@ -10,6 +10,11 @@ services:
       no_cache: true
     image: examples/fileupload
     restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
     ports:
       - 5030:5030
     networks:

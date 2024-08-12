@@ -10,8 +10,16 @@ services:
       no_cache: true
     image: examples/mysql
     restart: always
-    ports:
-      - 7030:7030
+    deploy:
+      mode: replicated
+      replicas: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+    # ports:
+    # - 7030:7030
     networks:
       - example
     external_links:
