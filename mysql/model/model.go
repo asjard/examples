@@ -4,12 +4,12 @@ import (
 	"context"
 
 	"github.com/asjard/asjard/core/logger"
-	"github.com/asjard/asjard/pkg/database/mysql"
+	"github.com/asjard/asjard/pkg/stores/xgorm"
 )
 
 func Init() error {
 	logger.Debug("create table")
-	db, err := mysql.DB(context.Background())
+	db, err := xgorm.DB(context.Background())
 	if err != nil {
 		return err
 	}

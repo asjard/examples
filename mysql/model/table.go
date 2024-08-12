@@ -9,11 +9,11 @@ import (
 	"github.com/asjard/asjard/core/bootstrap"
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
-	"github.com/asjard/asjard/pkg/database"
-	"github.com/asjard/asjard/pkg/database/cache"
-	"github.com/asjard/asjard/pkg/database/mysql"
-	"github.com/asjard/asjard/pkg/database/redis"
 	"github.com/asjard/asjard/pkg/protobuf/requestpb"
+	"github.com/asjard/asjard/pkg/stores"
+	"github.com/asjard/asjard/pkg/stores/cache"
+	"github.com/asjard/asjard/pkg/stores/xgorm"
+	"github.com/asjard/asjard/pkg/stores/xredis"
 	pb "github.com/asjard/examples/protobuf/mysqlpb"
 	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
@@ -28,9 +28,9 @@ type ExampleTable struct {
 }
 
 type ExampleModel struct {
-	database.Model
+	stores.Model
 	*ExampleTable
-	kvCache *redis.Cache
+	kvCache *xredis.Cache
 }
 
 // TableName 数据库表名
@@ -59,8 +59,8 @@ func (model *ExampleModel) Bootstrap() (err error) {
 	if err != nil {
 		return err
 	}
-	model.kvCache, err = redis.NewKeyValueCache(model.ExampleTable,
-		redis.WithLocalCache(localCache))
+	model.kvCache, err = xredis.NewKeyValueCache(model.ExampleTable,
+		xredis.WithLocalCache(localCache))
 	if err != nil {
 		return err
 	}
@@ -144,7 +144,7 @@ func (model *ExampleModel) getCacheKey(name string) string {
 }
 
 func (t ExampleTable) Create(ctx context.Context, in *pb.CreateOrUpdateReq) error {
-	db, err := mysql.DB(ctx)
+	db, err := xgorm.DB(ctx)
 	if err != nil {
 		return err
 	}
@@ -163,7 +163,7 @@ func (t ExampleTable) Create(ctx context.Context, in *pb.CreateOrUpdateReq) erro
 }
 
 func (t ExampleTable) Update(ctx context.Context, in *pb.CreateOrUpdateReq) (*pb.ExampleInfo, error) {
-	db, err := mysql.DB(ctx)
+	db, err := xgorm.DB(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +181,7 @@ func (t ExampleTable) Update(ctx context.Context, in *pb.CreateOrUpdateReq) (*pb
 }
 
 func (t ExampleTable) Get(ctx context.Context, in *pb.ReqWithName) (*pb.ExampleInfo, error) {
-	db, err := mysql.DB(ctx)
+	db, err := xgorm.DB(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func (t ExampleTable) Get(ctx context.Context, in *pb.ReqWithName) (*pb.ExampleI
 }
 
 func (t ExampleTable) Search(ctx context.Context, in *pb.SearchReq) (*pb.ExampleList, error) {
-	db, err := mysql.DB(ctx)
+	db, err := xgorm.DB(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (t ExampleTable) Search(ctx context.Context, in *pb.SearchReq) (*pb.Example
 }
 
 func (t ExampleTable) Del(ctx context.Context, in *pb.ReqWithName) error {
-	db, err := mysql.DB(ctx)
+	db, err := xgorm.DB(ctx)
 	if err != nil {
 		return err
 	}

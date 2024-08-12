@@ -638,8 +638,8 @@ github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kd
 github.com/apache/arrow/go/v10 v10.0.1/go.mod h1:YvhnlEePVnBS4+0z3fhPfUy7W1Ikj0Ih0vcRo/gZ1M0=
 github.com/apache/arrow/go/v11 v11.0.0/go.mod h1:Eg5OsL5H+e299f7u5ssuXsuHQVEGC4xei5aX110hRiI=
 github.com/apache/thrift v0.16.0/go.mod h1:PHK3hniurgQaNMZYaCLEqXKsYK8upmhPbmdP2FXSqgU=
-github.com/asjard/asjard v0.1.1-0.20240812144027-03f3a211e3f3 h1:gIWhoNGChbjzGPEcyGamIrVq5rRZbds8FictRsx5dRA=
-github.com/asjard/asjard v0.1.1-0.20240812144027-03f3a211e3f3/go.mod h1:SnfdFi2hsZeFclxn/6gkPzRZoS7ymxWvAwyVMXmzYD0=
+github.com/asjard/asjard v0.1.1-0.20240812154126-83480b2fc154 h1:sdfZF+79eMVLgjBNT6Za4Oyyz5bYOw3k+IzkKs5USaw=
+github.com/asjard/asjard v0.1.1-0.20240812154126-83480b2fc154/go.mod h1:SnfdFi2hsZeFclxn/6gkPzRZoS7ymxWvAwyVMXmzYD0=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
 github.com/boombuler/barcode v1.0.0/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=

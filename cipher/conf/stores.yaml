@@ -1,6 +1,6 @@
 asjard:
   ## 数据相关配置
-  database:
+  stores:
     etcd:
       clients:
         default:
