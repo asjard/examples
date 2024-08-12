@@ -1,0 +1,22 @@
+version: "3"
+
+networks:
+  example:
+
+services:
+  server:
+    build:
+      context: .
+      no_cache: true
+    image: examples/server
+    restart: always
+    ports:
+      - 6030:6030
+    networks:
+      - example
+    external_links:
+      - asjard-etcd-1:etcd
+      - asjard-mariadb-1:mariadb
+      - asjard-redis-1:redis
+      - asjard-jeager-1:jaeger
+      - asjard-pushgateway-1:pushgateway

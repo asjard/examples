@@ -2,10 +2,10 @@ module github.com/asjard/examples
 
 go 1.21
 
-replace github.com/asjard/asjard => ../asjard
+//replace github.com/asjard/asjard => ../asjard
 
 require (
-	github.com/asjard/asjard v0.1.1-0.20240810135046-18d50283bc55
+	github.com/asjard/asjard v0.1.1-0.20240812070531-f016b5ef121e
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/google/uuid v1.6.0
 	github.com/valyala/fasthttp v1.55.0

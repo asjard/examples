@@ -5,11 +5,11 @@ asjard:
     grpc:
       enabled: true
       addresses:
-        listen: 0.0.0.0:7031
+        listen: 0.0.0.0:6031
     pprof:
       enabled: true
       addresses:
-        listen: 0.0.0.0:7032
+        listen: 0.0.0.0:6032
     ## rest(HTTP)协议相关配置
     rest:
       enabled: true
@@ -22,5 +22,5 @@ asjard:
           - Paasport-Device-Id
       ## 同grpc相关配置
       addresses:
-        listen: 0.0.0.0:7030
+        listen: 0.0.0.0:6030
         # advertise: 127.0.0.1:7030

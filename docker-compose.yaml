@@ -56,3 +56,5 @@ services:
   pushgateway:
     image: bitnami/pushgateway:latest
     restart: always
+    networks:
+      - example

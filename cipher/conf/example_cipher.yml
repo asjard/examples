@@ -2,12 +2,6 @@
 ## key: L5XqRRJPm8KLI+EcqUuHHg==
 ## iv: xKXiw8E1TaXJmjHL6D9+TA==
 
-## 加密字段密钥和配置文件密钥区分开来
-## 加密字段密钥加密存放在加密文件中
-# cipher:
-#   aesCBCPkcs5paddingCipherExample:
-#     base64Key: sdGDFWAFrYLmw8TC6GmHdA==
-#     base64Iv: iytdORYbBxeoNRtzdnKUcw==
 ## 加密字段写在明文文件中
 ## 和加密文件使用相同的密钥
 ## plain text: this is a aes encrypt value

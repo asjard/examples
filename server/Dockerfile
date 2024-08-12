@@ -2,11 +2,9 @@ FROM scratch:latest
 
 WORKDIR /app
 
-COPY bin/server_linux /app
-COPY conf/ /app/conf/
+COPY ./bin/server /app/server
+COPY ./conf/ /app/conf/
 
-EXPOSE 7030
-EXPOSE 7031
-EXPOSE 7032
+EXPOSE 6030
 
-ENTRYPOINT [ "/app/server_linux" ]
+ENTRYPOINT [ "/app/server" ]

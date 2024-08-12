@@ -29,13 +29,13 @@ service Cipher {
 // 加解密示例返回
 message DecryptResp {
     // 明文文件中的aes加密值
-    string aes_encrypt_value_in_plain_file          = 1;
+    string aes_encrypt_value_in_plain_file = 1;
     // 明文文件中的base64加密值
-    string base64_encrypt_value_in_plain_file       = 2;
+    string base64_encrypt_value_in_plain_file = 2;
     // aes加密文件中的明文值
-    string plain_value_in_aes_encrypt_file          = 3;
+    string plain_value_in_aes_encrypt_file = 3;
     // aes加密文件中的aes加密值
-    string aes_encrypt_value_in_aes_encrypt_file    = 4;
+    string aes_encrypt_value_in_aes_encrypt_file = 4;
     // aes加密文件中的base64加密值
     string base64_encrypt_value_in_aes_encrypt_file = 5;
 }
@@ -43,11 +43,13 @@ message DecryptResp {
 // 加密请求
 message EncryptReq {
     // 明文
-    string plain_text = 1;
+    string plain_text  = 1;
+    string cipher_name = 2;
 }
 
 // 加密返回
 message EncryptResp {
     // 密文
-    string secret_text = 2;
+    string secret_text = 1;
+    string cipher_name = 2;
 }

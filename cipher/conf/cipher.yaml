@@ -1,0 +1,7 @@
+## 加密字段密钥和配置文件密钥区分开来
+## 加密字段密钥加密存放在加密文件中
+asjard:
+  cipher:
+    aesCBCPkcs5paddingCipherExample:
+      base64Key: sdGDFWAFrYLmw8TC6GmHdA==
+      base64Iv: iytdORYbBxeoNRtzdnKUcw==

@@ -11,6 +11,7 @@ import (
 	"github.com/asjard/asjard/core/config"
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
+	_ "github.com/asjard/asjard/pkg/registry/etcd"
 	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/protobuf/serverpb"

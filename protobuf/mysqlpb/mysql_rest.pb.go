@@ -144,11 +144,11 @@ var MysqlRestServiceDesc = rest.ServiceDesc{
 }
 
 const (
+	Mysql_Search_RestPath = "/api/v1/examples/mysql"
+	Mysql_Del_RestPath    = "/api/v1/examples/mysql/mysql/{name}"
 	Mysql_Create_RestPath = "/api/v1/examples/mysql"
 	Mysql_Update_RestPath = "/api/v1/examples/mysql/{name}"
 	Mysql_Get_RestPath    = "/api/v1/examples/mysql/{name}"
-	Mysql_Search_RestPath = "/api/v1/examples/mysql"
-	Mysql_Del_RestPath    = "/api/v1/examples/mysql/mysql/{name}"
 )
 
 var file_mysql_proto_openapi = []byte{

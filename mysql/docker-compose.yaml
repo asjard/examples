@@ -19,3 +19,4 @@ services:
       - asjard-mariadb-1:mariadb
       - asjard-redis-1:redis
       - asjard-jeager-1:jaeger
+      - asjard-pushgateway-1:pushgateway

@@ -2,6 +2,10 @@ asjard:
   ## 多协议服务相关配置
   ## 不实时生效，修改后需重新启动
   servers:
+    grpc:
+      enabled: true
+      addresses:
+        listen: 0.0.0.0:9031
     ## rest(HTTP)协议相关配置
     rest:
       enabled: true
@@ -14,5 +18,5 @@ asjard:
           - Paasport-Device-Id
       ## 同grpc相关配置
       addresses:
-        listen: 127.0.0.1:7030
+        listen: 0.0.0.0:9030
         # advertise: 127.0.0.1:7030

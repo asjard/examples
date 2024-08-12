@@ -1,0 +1,22 @@
+version: "3"
+
+networks:
+  example:
+
+services:
+  cipher:
+    build:
+      context: .
+      no_cache: true
+    image: examples/cipher
+    restart: always
+    ports:
+      - 9030:9030
+    environment:
+      asjard_cipher_aesCBCPkcs5padding_base64Key: L5XqRRJPm8KLI+EcqUuHHg==
+      asjard_cipher_aesCBCPkcs5padding_base64Iv: xKXiw8E1TaXJmjHL6D9+TA==
+    networks:
+      - example
+    external_links:
+      - asjard-jeager-1:jaeger
+      - asjard-pushgateway-1:pushgateway
