@@ -5,8 +5,8 @@ build: main.go ## 编译
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./bin/server -ldflags="-s -w" ./
 
 run: build Dockerfile docker-compose.yaml
-	docker compose -p asjard build
-	docker compose -p asjard up -d
+	docker-compose -p asjard build
+	docker-compose -p asjard up -d
 
 down: docker-compose.yaml
-	docker compose -p asjard down
+	docker-compose -p asjard down
