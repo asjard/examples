@@ -5,9 +5,7 @@ networks:
 
 services:
   cipher:
-    build:
-      context: .
-      no_cache: true
+    build: ./
     image: examples/cipher
     restart: always
     deploy:
