@@ -1,6 +1,10 @@
 asjard:
   ## 数据相关配置
   stores:
+    consul:
+      clients:
+        default:
+          address: http://consul:8500
     etcd:
       clients:
         default:

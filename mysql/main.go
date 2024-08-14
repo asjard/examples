@@ -5,6 +5,7 @@ import (
 
 	"github.com/asjard/asjard"
 	"github.com/asjard/asjard/core/bootstrap"
+	_ "github.com/asjard/asjard/pkg/registry/consul"
 	_ "github.com/asjard/asjard/pkg/registry/etcd"
 	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"

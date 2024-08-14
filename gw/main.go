@@ -10,7 +10,9 @@ import (
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
 	_ "github.com/asjard/asjard/pkg/config/etcd"
-	_ "github.com/asjard/asjard/pkg/registry/etcd"
+	_ "github.com/asjard/asjard/pkg/registry/consul"
+
+	// _ "github.com/asjard/asjard/pkg/registry/etcd"
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/protobuf/cipherpb"
 	"github.com/asjard/examples/protobuf/mysqlpb"

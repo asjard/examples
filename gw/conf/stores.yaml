@@ -6,3 +6,7 @@ asjard:
         default:
           endpoints:
             - "etcd:2379"
+    consul:
+      clients:
+        default:
+          address: http://consul:8500

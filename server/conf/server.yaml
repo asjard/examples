@@ -22,5 +22,5 @@ asjard:
           - Paasport-Device-Id
       ## 同grpc相关配置
       addresses:
-        listen: 0.0.0.0:6030
+        listen: 0.0.0.0:5030
         # advertise: 127.0.0.1:7030

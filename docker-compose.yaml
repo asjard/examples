@@ -13,6 +13,8 @@ services:
         max-file: "10"
     networks:
       - example
+    ports:
+      - 2379:2379
     environment:
       ALLOW_NONE_AUTHENTICATION: yes
   etcdkeeper:
@@ -37,8 +39,8 @@ services:
         max-file: "10"
     networks:
       - example
-    # ports:
-    # - 3306:3306
+    ports:
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: my-secret-pw
       MYSQL_DATABASE: example-database
@@ -53,8 +55,8 @@ services:
         max-file: "10"
     networks:
       - example
-    # ports:
-    # - 6379:6379
+    ports:
+      - 6379:6379
   jeager:
     image: jaegertracing/all-in-one:latest
     restart: always
@@ -91,5 +93,21 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
+    ports:
+      - 9091:9091
+    networks:
+      - example
+  consul:
+    image: consul:1.15.4
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+    ports:
+      - 8500:8500
+    environment:
+      CONSUL_BIND_INTERFACE: eth0
     networks:
       - example

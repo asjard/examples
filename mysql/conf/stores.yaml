@@ -27,6 +27,10 @@ asjard:
       clients:
         default:
           address: redis:6379
+    consul:
+      clients:
+        default:
+          address: http://consul:8500
     etcd:
       clients:
         default:

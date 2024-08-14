@@ -10,7 +10,7 @@ services:
     restart: always
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
     logging:
       driver: json-file
       options:
@@ -26,3 +26,4 @@ services:
       - asjard-redis-1:redis
       - asjard-jeager-1:jaeger
       - asjard-pushgateway-1:pushgateway
+      - asjard-consul-1:consul
