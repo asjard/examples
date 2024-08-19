@@ -19,6 +19,6 @@ services:
       - example
     external_links:
       - asjard-etcd-1:etcd
-      - asjard-jeager-1:jaeger
+      - asjard-jaeger-1:jaeger
       - asjard-pushgateway-1:pushgateway
       - asjard-consul-1:consul

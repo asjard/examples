@@ -11,9 +11,11 @@ import (
 	"github.com/asjard/asjard/core/config"
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
-	_ "github.com/asjard/asjard/pkg/registry/consul"
+	// _ "github.com/asjard/asjard/pkg/config/consul"
+	// _ "github.com/asjard/asjard/pkg/registry/consul"
 
-	// _ "github.com/asjard/asjard/pkg/registry/etcd"
+	_ "github.com/asjard/asjard/pkg/registry/etcd"
+	_ "github.com/asjard/asjard/pkg/config/etcd"
 	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/protobuf/serverpb"
@@ -44,6 +46,9 @@ func (api *ServerAPI) Bootstrap() error {
 func (ServerAPI) Shutdown() {}
 
 func (api *ServerAPI) Say(ctx context.Context, in *serverpb.HelloReq) (*serverpb.HelloReq, error) {
+	in.Configs = &serverpb.HelloReq_Configs{
+		KeyInDifferentSourcer: config.GetString("test_key", ""),
+	}
 	return in, nil
 }
 

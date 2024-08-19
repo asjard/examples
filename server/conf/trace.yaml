@@ -1,7 +1,7 @@
 asjard:
   trace:
     enabled: true
-    endpoint: http://jeager:4318
+    endpoint: http://jaeger:4318
     # timeout: 1s
     certFile: ""
     keyFile: ""

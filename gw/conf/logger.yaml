@@ -1,3 +1,4 @@
 asjard:
   logger:
-    accessEnabled: true
+    accessLog:
+      enabled: true

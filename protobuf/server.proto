@@ -53,6 +53,7 @@ message HelloReq {
         string timeout                                            = 1;
         string field_in_different_file_under_same_section         = 2;
         string another_field_in_different_file_under_same_section = 3;
+        string key_in_different_sourcer                           = 4;
     }
     message Instance {
         string              id          = 1;

@@ -75,8 +75,8 @@ var CipherRestServiceDesc = rest.ServiceDesc{
 }
 
 const (
-	Cipher_Encrypt_RestPath = "/api/v1/examples/cipher/encrypt"
 	Cipher_Decrypt_RestPath = "/api/v1/examples/cipher/decrypt"
+	Cipher_Encrypt_RestPath = "/api/v1/examples/cipher/encrypt"
 )
 
 var file_cipher_proto_openapi = []byte{
