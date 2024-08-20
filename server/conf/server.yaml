@@ -14,7 +14,7 @@ asjard:
     rest:
       enabled: true
       i18n:
-        enabled: true
+        enabled: false
       openapi:
         enabled: true
       cors:

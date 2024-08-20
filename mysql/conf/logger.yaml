@@ -1,0 +1,8 @@
+asjard:
+  logger:
+    # level: WARN
+    accessLog:
+      enabled: false
+    gorm:
+      format: text
+      # filepath: logs/mysql.text

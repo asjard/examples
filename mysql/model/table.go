@@ -9,11 +9,10 @@ import (
 	"github.com/asjard/asjard/core/bootstrap"
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
+	"github.com/asjard/asjard/pkg/cache"
 	"github.com/asjard/asjard/pkg/protobuf/requestpb"
 	"github.com/asjard/asjard/pkg/stores"
-	"github.com/asjard/asjard/pkg/stores/cache"
 	"github.com/asjard/asjard/pkg/stores/xgorm"
-	"github.com/asjard/asjard/pkg/stores/xredis"
 	pb "github.com/asjard/examples/protobuf/mysqlpb"
 	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
@@ -30,7 +29,7 @@ type ExampleTable struct {
 type ExampleModel struct {
 	stores.Model
 	*ExampleTable
-	kvCache *xredis.Cache
+	kvCache *cache.CacheRedis
 }
 
 // TableName 数据库表名
@@ -59,8 +58,8 @@ func (model *ExampleModel) Bootstrap() (err error) {
 	if err != nil {
 		return err
 	}
-	model.kvCache, err = xredis.NewKeyValueCache(model.ExampleTable,
-		xredis.WithLocalCache(localCache))
+	model.kvCache, err = cache.NewRedisKeyValueCache(model.ExampleTable,
+		cache.WithLocalCache(localCache))
 	if err != nil {
 		return err
 	}

@@ -6,6 +6,10 @@ asjard:
       enabled: true
       addresses:
         listen: 0.0.0.0:7031
+    pprof:
+      enabled: true
+      addresses:
+        listen: 0.0.0.0:7032
     ## rest(HTTP)协议相关配置
     rest:
       enabled: true
@@ -20,3 +24,5 @@ asjard:
       addresses:
         listen: 0.0.0.0:7030
         # advertise: 127.0.0.1:7030
+      options:
+        TCPKeepalive: true

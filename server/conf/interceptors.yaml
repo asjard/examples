@@ -1,0 +1,10 @@
+asjard:
+  interceptors:
+    server:
+      rateLimiter:
+        limit: 1
+        burst: 1
+        methods:
+          - name: /api.v1.server.Server/Hello
+            limit: 3
+            burst: -1

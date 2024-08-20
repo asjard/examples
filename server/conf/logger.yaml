@@ -1,4 +1,5 @@
 asjard:
   logger:
+    level: INFO
     accessLog:
-      enabled: true
+      enabled: false
