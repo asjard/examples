@@ -1,5 +1,5 @@
 asjard:
   metrics:
-    enabled: true
+    enabled: false
     pushGateway:
       endpoint: http://pushgateway:9091

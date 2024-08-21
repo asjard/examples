@@ -11,11 +11,12 @@ import (
 	"github.com/asjard/asjard/core/config"
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
-	// _ "github.com/asjard/asjard/pkg/config/consul"
-	// _ "github.com/asjard/asjard/pkg/registry/consul"
 
-	_ "github.com/asjard/asjard/pkg/registry/etcd"
-	_ "github.com/asjard/asjard/pkg/config/etcd"
+	_ "github.com/asjard/asjard/pkg/config/consul"
+	_ "github.com/asjard/asjard/pkg/registry/consul"
+
+	// _ "github.com/asjard/asjard/pkg/config/etcd"
+	// _ "github.com/asjard/asjard/pkg/registry/etcd"
 	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/protobuf/serverpb"
@@ -46,14 +47,11 @@ func (api *ServerAPI) Bootstrap() error {
 func (ServerAPI) Shutdown() {}
 
 func (api *ServerAPI) Say(ctx context.Context, in *serverpb.HelloReq) (*serverpb.HelloReq, error) {
-	in.Configs = &serverpb.HelloReq_Configs{
-		KeyInDifferentSourcer: config.GetString("test_key", ""),
-	}
 	return in, nil
 }
 
 func (api *ServerAPI) Hello(ctx context.Context, in *emptypb.Empty) (*serverpb.HelloReq, error) {
-	return api.client.Say(ctx, &serverpb.HelloReq{})
+	return api.client.Call(ctx, &serverpb.HelloReq{})
 }
 
 // Log SSE请求
@@ -81,6 +79,13 @@ func (api *ServerAPI) Log(ctx context.Context, in *emptypb.Empty) (*emptypb.Empt
 		}
 	})
 	return nil, nil
+}
+
+func (api *ServerAPI) Call(ctx context.Context, in *serverpb.HelloReq) (*serverpb.HelloReq, error) {
+	in.Configs = &serverpb.HelloReq_Configs{
+		KeyInDifferentSourcer: config.GetString("test_key", ""),
+	}
+	return in, nil
 }
 
 func (api *ServerAPI) GrpcServiceDesc() *grpc.ServiceDesc {

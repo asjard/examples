@@ -20,6 +20,10 @@ service Server {
         option (asjard.api.http) = {
             get : "/region/{region_id}/project/{project_id}/user/{user_id}"
         };
+        option (asjard.api.http) = {
+            delete : "/region/{region_id}/project/{project_id}/user/{user_id}"
+            writer_name : "custome_writer"
+        };
     };
 
     // rest请求

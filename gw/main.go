@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -27,6 +28,29 @@ var _ rest.Handler = &pb.ServerAPI{}
 type Rewrite struct {
 	*pb.ServerAPI
 	exit <-chan struct{}
+}
+
+// Response 自定义rest输出
+type Response struct {
+	Err  error `json:"err"`
+	Data any   `json:"data"`
+}
+
+func init() {
+	// 添加自定义输出
+	rest.AddWriter("custome_writer", CustomeWriter)
+}
+
+// CustomeWriter 自定义输出
+func CustomeWriter(c *rest.Context, data any, err error) {
+	b, err := json.Marshal(&Response{
+		Err:  err,
+		Data: data,
+	})
+	if err != nil {
+		logger.Error("custome writer fail", "err", err)
+	}
+	c.Write(b)
 }
 
 func (api Rewrite) Log(ctx context.Context, in *emptypb.Empty) (*emptypb.Empty, error) {
