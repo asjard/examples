@@ -1,5 +1,5 @@
-asjard:
-  interceptors:
-    client:
-      circuitBreaker:
-        max_concurrent_request: 1000
+# asjard:
+#   interceptors:
+#     client:
+#       circuitBreaker:
+#         max_concurrent_request: 1000

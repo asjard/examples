@@ -3,14 +3,14 @@ asjard:
   ## 不实时生效，修改后需重新启动
   servers:
     pprof:
-      enabled: false
+      enabled: true
       addresses:
         listen: 0.0.0.0:7032
     ## rest(HTTP)协议相关配置
     rest:
       enabled: true
       openapi:
-        enabled: true
+        enabled: false
       cors:
         allowHeaders:
           - Authorization
@@ -20,3 +20,5 @@ asjard:
       addresses:
         listen: 0.0.0.0:8030
         # advertise: 127.0.0.1:7030
+      # options:
+      # concurrency: 5000

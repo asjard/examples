@@ -23,11 +23,11 @@ asjard:
 
     ## 本地服务发现配置
     ## 实时生效，无需重启服务
-    localDiscover:
-      ## 服务名称
-      ## 配置格式{protocol}://{ip}:{port}
-      server:
-        - grpc://127.0.0.1:7031
+    # localDiscover:
+    #   ## 服务名称
+    #   ## 配置格式{protocol}://{ip}:{port}
+    #   server:
+    #     - grpc://127.0.0.1:6031
     # helloGrpc1:
     #   - grpc://127.0.0.1:8081
     #   - grpc://127.0.0.1:9081

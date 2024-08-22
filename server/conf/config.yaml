@@ -1,8 +1,8 @@
 asjard:
   config:
     nacos:
-      client: default
-      namespaceId: ${asjard.service.app}
+      client: default1
+      namespaceId: ${asjard.service.app}1
       dataIds:
         - a
         - b

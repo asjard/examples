@@ -7,7 +7,7 @@ asjard:
       addresses:
         listen: 0.0.0.0:6031
     pprof:
-      enabled: true
+      enabled: false
       addresses:
         listen: 0.0.0.0:6032
     ## rest(HTTP)协议相关配置
@@ -16,7 +16,7 @@ asjard:
       i18n:
         enabled: false
       openapi:
-        enabled: true
+        enabled: false
       cors:
         allowHeaders:
           - Authorization
@@ -24,5 +24,9 @@ asjard:
           - Paasport-Device-Id
       ## 同grpc相关配置
       addresses:
-        listen: 0.0.0.0:6030
+        listen: 127.0.0.1:6030
         advertise: example.com:80
+      # options:
+      # maxConnsPerIP: 10
+      # tcpKeepalive: true
+      # disablePreParseMultipartForm: true

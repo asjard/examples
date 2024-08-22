@@ -9,10 +9,12 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 
 service Server {
+    // 对于Server这个服务设置全局配置
     option (asjard.api.serviceHttp) = {
         group : "examples/server"
     };
 
+    // 注释，描述这个接口的作用
     rpc Say(HelloReq) returns (HelloReq) {
         option (asjard.api.http) = {
             post : "/region/{region_id}/project/{project_id}/user/{user_id}"
