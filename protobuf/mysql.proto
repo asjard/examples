@@ -38,7 +38,7 @@ service Mysql {
     // 删除
     rpc Del(ReqWithName) returns (google.protobuf.Empty) {
         option (asjard.api.http) = {
-            delete : "/mysql/{name}"
+            delete : "/{name}"
         };
     };
 }

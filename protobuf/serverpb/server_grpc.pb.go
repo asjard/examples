@@ -30,6 +30,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServerClient interface {
+	// 注释，描述这个接口的作用
 	Say(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloReq, error)
 	// rest请求
 	Hello(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HelloReq, error)
@@ -87,6 +88,7 @@ func (c *serverClient) Call(ctx context.Context, in *HelloReq, opts ...grpc.Call
 // All implementations must embed UnimplementedServerServer
 // for forward compatibility
 type ServerServer interface {
+	// 注释，描述这个接口的作用
 	Say(context.Context, *HelloReq) (*HelloReq, error)
 	// rest请求
 	Hello(context.Context, *emptypb.Empty) (*HelloReq, error)

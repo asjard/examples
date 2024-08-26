@@ -11,7 +11,7 @@ import "google/protobuf/wrappers.proto";
 service Server {
     // 对于Server这个服务设置全局配置
     option (asjard.api.serviceHttp) = {
-        group : "examples/server"
+        group : "/examples/server"
     };
 
     // 注释，描述这个接口的作用

@@ -20,6 +20,8 @@ import (
 	_ "github.com/asjard/asjard/pkg/config/etcd"
 	// 从etcd发现服务, 并把当前服务注册到etcd
 	_ "github.com/asjard/asjard/pkg/registry/etcd"
+	_ "github.com/asjard/contrib/registry/service_center"
+
 	// 加载grpc服务
 	"github.com/asjard/asjard/pkg/server/grpc"
 	// 加载rest服务

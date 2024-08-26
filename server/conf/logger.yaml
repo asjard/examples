@@ -1,5 +1,5 @@
 asjard:
   logger:
-    level: INFO
+    level: DEBUG
     accessLog:
       enabled: false

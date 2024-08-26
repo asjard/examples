@@ -35,3 +35,7 @@ asjard:
     ## etcd注册发现中心相关配置
     etcd:
       client: default
+
+    serviceCenter:
+      endpoints:
+        - service_center:30100

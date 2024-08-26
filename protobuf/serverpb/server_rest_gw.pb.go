@@ -30,6 +30,8 @@ func (api *ServerAPI) Bootstrap() error {
 }
 func (api *ServerAPI) Shutdown() {
 }
+
+// 注释，描述这个接口的作用
 func (api *ServerAPI) Say(ctx context.Context, in *HelloReq) (*HelloReq, error) {
 	return api.client.Say(ctx, in)
 }
