@@ -52,8 +52,8 @@ func NewExampleModel() *ExampleModel {
 	return exampleModel
 }
 
-// Bootstrap 缓存初始化
-func (model *ExampleModel) Bootstrap() (err error) {
+// Start 缓存初始化
+func (model *ExampleModel) Start() (err error) {
 	localCache, err := cache.NewLocalCache(model.ExampleTable)
 	if err != nil {
 		return err
@@ -66,8 +66,8 @@ func (model *ExampleModel) Bootstrap() (err error) {
 	return nil
 }
 
-// Shutdown .
-func (model *ExampleModel) Shutdown() {}
+// Stop .
+func (model *ExampleModel) Stop() {}
 
 func (model *ExampleModel) Create(ctx context.Context, in *pb.CreateOrUpdateReq) error {
 	// 需要删除删除缓存
