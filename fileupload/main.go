@@ -10,7 +10,7 @@ import (
 	"github.com/asjard/asjard/core/status"
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/asjard/utils"
-	"github.com/asjard/examples/protobuf/filepb"
+	"github.com/asjard/examples/protobuf/api/filepb"
 	"github.com/google/uuid"
 	"github.com/valyala/fasthttp"
 	"google.golang.org/grpc/codes"

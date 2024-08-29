@@ -1,4 +1,4 @@
-package model
+package models
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/asjard/asjard/core/status"
 	"github.com/asjard/asjard/pkg/cache"
 	"github.com/asjard/asjard/pkg/stores"
-	pb "github.com/asjard/examples/protobuf/mysqlpb"
+	pb "github.com/asjard/examples/protobuf/api/mysqlpb"
 	"google.golang.org/grpc/codes"
 )
 
@@ -44,7 +44,6 @@ func (model *ExampleModel) Start() (err error) {
 
 // Stop .
 func (model *ExampleModel) Stop() {}
-
 
 func (model *ExampleModel) Create(ctx context.Context, in *pb.CreateOrUpdateReq) error {
 	// 需要删除删除缓存

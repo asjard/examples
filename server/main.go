@@ -26,7 +26,7 @@ import (
 	"github.com/asjard/asjard/pkg/server/grpc"
 	// 加载rest服务
 	"github.com/asjard/asjard/pkg/server/rest"
-	"github.com/asjard/examples/protobuf/serverpb"
+	"github.com/asjard/examples/protobuf/api/serverpb"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 

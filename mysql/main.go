@@ -10,14 +10,14 @@ import (
 	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/mysql/apis"
-	"github.com/asjard/examples/mysql/model"
+	"github.com/asjard/examples/mysql/models"
 )
 
 type System struct{}
 
 // Start 系统初始化
 func (System) Start() error {
-	if err := model.Init(); err != nil {
+	if err := models.Init(); err != nil {
 		return err
 	}
 	return nil

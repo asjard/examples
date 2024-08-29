@@ -12,7 +12,7 @@ import (
 	cs "github.com/asjard/asjard/pkg/security"
 	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
-	"github.com/asjard/examples/protobuf/cipherpb"
+	"github.com/asjard/examples/protobuf/api/cipherpb"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 

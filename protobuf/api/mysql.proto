@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.v1.mysql;
 
-option go_package = "github.com/asjard/examples/protobuf/mysqlpb";
+option go_package = "github.com/asjard/examples/protobuf/api/mysqlpb";
 
 import "github.com/asjard/protobuf/http.proto";
 import "google/protobuf/empty.proto";

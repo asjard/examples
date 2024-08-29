@@ -6,21 +6,21 @@ import (
 	"github.com/asjard/asjard/pkg/protobuf/requestpb"
 	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
-	"github.com/asjard/examples/mysql/model"
-	"github.com/asjard/examples/mysql/model/xerr"
-	pb "github.com/asjard/examples/protobuf/mysqlpb"
+	"github.com/asjard/examples/mysql/models"
+	"github.com/asjard/examples/mysql/models/xerr"
+	pb "github.com/asjard/examples/protobuf/api/mysqlpb"
 	"github.com/go-playground/validator"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type ExampleAPI struct {
-	exampleModel *model.ExampleModel
+	exampleModel *models.ExampleModel
 	pb.UnimplementedMysqlServer
 }
 
 func NewExampleAPI() *ExampleAPI {
 	return &ExampleAPI{
-		exampleModel: model.NewExampleModel(),
+		exampleModel: models.NewExampleModel(),
 	}
 }
 

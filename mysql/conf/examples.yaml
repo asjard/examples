@@ -1,0 +1,4 @@
+examples:
+  gorm:
+    ## 是否自动创建表
+    # autoMigrate: false

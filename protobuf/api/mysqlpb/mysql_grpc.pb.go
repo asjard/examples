@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v5.27.0
-// source: mysql.proto
+// source: api/mysql.proto
 
 package mysqlpb
 
@@ -264,5 +264,5 @@ var Mysql_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "mysql.proto",
+	Metadata: "api/mysql.proto",
 }

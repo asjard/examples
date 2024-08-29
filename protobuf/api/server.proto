@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.v1.server;
 
-option go_package = "github.com/asjard/examples/protobuf/serverpb";
+option go_package = "github.com/asjard/examples/protobuf/api/serverpb";
 
 import "github.com/asjard/protobuf/http.proto";
 import "google/protobuf/empty.proto";

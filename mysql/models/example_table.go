@@ -1,4 +1,4 @@
-package model
+package models
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/asjard/asjard/core/status"
 	"github.com/asjard/asjard/pkg/protobuf/requestpb"
 	"github.com/asjard/asjard/pkg/stores/xgorm"
-	pb "github.com/asjard/examples/protobuf/mysqlpb"
+	pb "github.com/asjard/examples/protobuf/api/mysqlpb"
 	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
 )

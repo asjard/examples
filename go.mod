@@ -7,7 +7,7 @@ go 1.21.6
 //replace github.com/asjard/contrib => ../contrib
 
 require (
-	github.com/asjard/asjard v0.5.1-0.20240828024453-2bc68c57e62a
+	github.com/asjard/asjard v0.5.1-0.20240829091935-551496aed7c5
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/google/uuid v1.6.0
 	github.com/valyala/fasthttp v1.55.0

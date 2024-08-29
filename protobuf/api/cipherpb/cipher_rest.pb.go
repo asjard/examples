@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-rest v1.3.0
 // - protoc             v5.27.0
-// source: cipher.proto
+// source: api/cipher.proto
 
 package cipherpb
 
@@ -55,7 +55,7 @@ func _Cipher_Decrypt_RestHandler(ctx *rest.Context, srv any, interceptor server.
 var CipherRestServiceDesc = rest.ServiceDesc{
 	ServiceName: "api.v1.cipher.Cipher",
 	HandlerType: (*CipherServer)(nil),
-	OpenAPI:     file_cipher_proto_openapi,
+	OpenAPI:     file_api_cipher_proto_openapi,
 	Methods: []rest.MethodDesc{
 		{
 			MethodName: "Encrypt",
@@ -79,7 +79,7 @@ const (
 	Cipher_Decrypt_RestPath = "/api/v1/examples/cipher/decrypt"
 )
 
-var file_cipher_proto_openapi = []byte{
+var file_api_cipher_proto_openapi = []byte{
 	0x0a, 0x05, 0x33, 0x2e, 0x30, 0x2e, 0x33, 0x12, 0x07, 0x32, 0x05, 0x30, 0x2e, 0x30, 0x2e, 0x31,
 	0x22, 0xe5, 0x04, 0x0a, 0x87, 0x02, 0x0a, 0x1f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x2f,
 	0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x73, 0x2f, 0x63, 0x69, 0x70, 0x68, 0x65, 0x72, 0x2f,

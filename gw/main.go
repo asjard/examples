@@ -17,9 +17,9 @@ import (
 	_ "github.com/asjard/asjard/pkg/registry/etcd"
 
 	"github.com/asjard/asjard/pkg/server/rest"
-	"github.com/asjard/examples/protobuf/cipherpb"
-	"github.com/asjard/examples/protobuf/mysqlpb"
-	pb "github.com/asjard/examples/protobuf/serverpb"
+	"github.com/asjard/examples/protobuf/api/cipherpb"
+	"github.com/asjard/examples/protobuf/api/mysqlpb"
+	pb "github.com/asjard/examples/protobuf/api/serverpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/protobuf/types/known/emptypb"
 )

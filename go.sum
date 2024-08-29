@@ -657,8 +657,8 @@ github.com/armon/go-metrics v0.4.1 h1:hR91U9KYmb6bLBYLQjyM+3j+rcd/UhE+G78SFnF8gJ
 github.com/armon/go-metrics v0.4.1/go.mod h1:E6amYzXo6aW1tqzoZGT755KkbgrJsSdpwZ+3JqfkOG4=
 github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310/go.mod h1:ufUuZ+zHj4x4TnLV4JWEpy2hxWSpsRywHrMgIH9cCH8=
 github.com/armon/go-radix v1.0.0/go.mod h1:ufUuZ+zHj4x4TnLV4JWEpy2hxWSpsRywHrMgIH9cCH8=
-github.com/asjard/asjard v0.5.1-0.20240828024453-2bc68c57e62a h1:N5nFVZ8otUj+4k0O574xVWPlXaxq/0lFDyuIFg130vM=
-github.com/asjard/asjard v0.5.1-0.20240828024453-2bc68c57e62a/go.mod h1:FFBw3ATbkK1exTmTiQWK9i6c8SjZG3eo5FcNy/AlKH8=
+github.com/asjard/asjard v0.5.1-0.20240829091935-551496aed7c5 h1:JPkTe+GnElUi69vnWIRiLbX01QgKxlvv1Wb/E51H/0o=
+github.com/asjard/asjard v0.5.1-0.20240829091935-551496aed7c5/go.mod h1:FFBw3ATbkK1exTmTiQWK9i6c8SjZG3eo5FcNy/AlKH8=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
