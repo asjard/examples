@@ -15,6 +15,8 @@ import (
 
 type System struct{}
 
+var _ bootstrap.Initiator = &System{}
+
 // Start 系统初始化
 func (System) Start() error {
 	if err := models.Init(); err != nil {

@@ -1,9 +1,0 @@
-asjard:
-  config:
-    nacos:
-      client: default1
-      namespaceId: ${asjard.service.app}1
-      dataIds:
-        - a
-        - b
-        - c

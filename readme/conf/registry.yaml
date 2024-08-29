@@ -1,0 +1,5 @@
+asjard:
+  registry:
+    localDiscover:
+      readme:
+        - grpc://127.0.0.1:6031

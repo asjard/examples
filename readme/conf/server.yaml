@@ -1,0 +1,14 @@
+asjard:
+  ## 多协议服务相关配置
+  ## 不实时生效，修改后需重新启动
+  servers:
+    grpc:
+      enabled: true
+      addresses:
+        listen: 127.0.0.1:6031
+    ## rest(HTTP)协议相关配置
+    rest:
+      enabled: true
+      ## 同grpc相关配置
+      addresses:
+        listen: 127.0.0.1:6030

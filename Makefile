@@ -1,6 +1,6 @@
 -include ./Makefile_base
 
-examples ?= cipher fileupload gw mysql server
+examples ?= cipher fileupload gw mysql server readme
 
 .PHONY: $(examples)
 

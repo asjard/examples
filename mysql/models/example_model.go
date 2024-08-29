@@ -18,6 +18,8 @@ type ExampleModel struct {
 	kvCache *cache.CacheRedis
 }
 
+var _ bootstrap.Initiator = &ExampleModel{}
+
 // NewExampleModel 模型初始化
 // 用XXXModel去复写XXXTable的方法
 func NewExampleModel() *ExampleModel {

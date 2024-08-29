@@ -1,0 +1,29 @@
+version: "3"
+
+networks:
+  example:
+
+services:
+  readme:
+    build: ./
+    image: examples/server
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+    # ports:
+    # - 6030:6030
+    networks:
+      - example
+    external_links:
+      - asjard-etcd-1:etcd
+      - asjard-mariadb-1:mariadb
+      - asjard-redis-1:redis
+      - asjard-jaeger-1:jaeger
+      - asjard-pushgateway-1:pushgateway
+      - asjard-consul-1:consul
