@@ -33,6 +33,7 @@ type ServerClient interface {
 	// 注释，描述这个接口的作用
 	Say(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloReq, error)
 	// rest请求
+	// 多行注释
 	Hello(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HelloReq, error)
 	// sse请求
 	Log(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -91,6 +92,7 @@ type ServerServer interface {
 	// 注释，描述这个接口的作用
 	Say(context.Context, *HelloReq) (*HelloReq, error)
 	// rest请求
+	// 多行注释
 	Hello(context.Context, *emptypb.Empty) (*HelloReq, error)
 	// sse请求
 	Log(context.Context, *emptypb.Empty) (*emptypb.Empty, error)

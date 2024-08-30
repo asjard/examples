@@ -7,7 +7,7 @@ go 1.21.6
 //replace github.com/asjard/contrib => ../contrib
 
 require (
-	github.com/asjard/asjard v0.5.1-0.20240829091935-551496aed7c5
+	github.com/asjard/asjard v0.5.1-0.20240830105843-9b83ab3a4a1f
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/google/uuid v1.6.0
 	github.com/valyala/fasthttp v1.55.0
@@ -23,6 +23,7 @@ require (
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
+	github.com/bdpiprava/scalar-go v0.7.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect

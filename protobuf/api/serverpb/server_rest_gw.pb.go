@@ -37,6 +37,7 @@ func (api *ServerAPI) Say(ctx context.Context, in *HelloReq) (*HelloReq, error) 
 }
 
 // rest请求
+// 多行注释
 func (api *ServerAPI) Hello(ctx context.Context, in *emptypb.Empty) (*HelloReq, error) {
 	return api.client.Hello(ctx, in)
 }

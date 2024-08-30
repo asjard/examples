@@ -8,6 +8,7 @@ import "github.com/asjard/protobuf/http.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 
+// 这里是server的描述
 service Server {
     // 对于Server这个服务设置全局配置
     option (asjard.api.serviceHttp) = {
@@ -18,6 +19,7 @@ service Server {
     rpc Say(HelloReq) returns (HelloReq) {
         option (asjard.api.http) = {
             post : "/region/{region_id}/project/{project_id}/user/{user_id}"
+            desc: "接口描述"
         };
         option (asjard.api.http) = {
             get : "/region/{region_id}/project/{project_id}/user/{user_id}"
@@ -29,6 +31,7 @@ service Server {
     };
 
     // rest请求
+    // 多行注释
     rpc Hello(google.protobuf.Empty) returns (HelloReq) {
         option (asjard.api.http) = {
             get : "/hello"

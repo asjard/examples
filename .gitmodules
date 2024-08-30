@@ -1,7 +1,7 @@
 [submodule "third_party/github.com/asjard/protobuf"]
 	path = third_party/github.com/asjard/protobuf
 	url = git@github.com:asjard/protobuf.git
-	tag = v0.1.0
+	tag = v0.2.0
 [submodule "third_party/github.com/google/gnostic"]
 	path = third_party/github.com/google/gnostic
 	url = git@github.com:google/gnostic.git

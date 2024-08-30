@@ -16,7 +16,9 @@ asjard:
       i18n:
         enabled: false
       openapi:
-        enabled: false
+        enabled: true
+        scalar:
+          theme: purple
       cors:
         allowHeaders:
           - Authorization
@@ -25,7 +27,7 @@ asjard:
       ## 同grpc相关配置
       addresses:
         listen: 127.0.0.1:6030
-        advertise: example.com:80
+        # advertise: example.com:80
       # options:
       # maxConnsPerIP: 10
       # tcpKeepalive: true
