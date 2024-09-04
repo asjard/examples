@@ -7,3 +7,7 @@
 	url = git@github.com:google/gnostic.git
 	branch = main
 	tag = v0.7.0
+[submodule "third_party/bifrost"]
+	path = third_party/bifrost
+	url = git@github.com:asjard/bifrost-template.git
+	branch = master
