@@ -24,13 +24,13 @@ service Examples {
         };
     };
     // Hello Example
-    rpc Hello(google.protobuf.Empty) returns(HelloReq) {
+    rpc Hello(google.protobuf.Empty) returns (HelloReq) {
         option (asjard.api.http) = {
-            get: "/hello"
-            api: "/"
-            version: "/"
-            group: "/"
-            desc: "接口描述"
+            get : "/hello"
+            api : "/"
+            version : "/"
+            group : "/"
+            desc : "接口描述"
         };
     };
     // grpc请求

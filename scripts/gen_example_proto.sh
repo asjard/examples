@@ -49,6 +49,8 @@ if [ "$GEN_PROTO_TS" == "true" ];then
     ts_out
 fi
 
+clang_format=$(which clang-format)
+
 cd $proto_dir
 
 for file in $(find . -type f -name "*.pb.go" -o -name '*.d.ts')
@@ -58,6 +60,9 @@ done
 
 for file in $(find . -type f -name "*.proto")
 do
+    if [ -n "$clang_format" ];then
+        ${clang_format} -i $file
+    fi
     protoc ${protoc_out} \
         -I${ROOTDIR}/../third_party \
         -I${ROOTDIR}/../third_party/github.com/google/gnostic \

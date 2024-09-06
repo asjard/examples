@@ -19,7 +19,7 @@ service Server {
     rpc Say(HelloReq) returns (HelloReq) {
         option (asjard.api.http) = {
             post : "/region/{region_id}/project/{project_id}/user/{user_id}"
-            desc: "接口描述"
+            desc : "接口描述"
         };
         option (asjard.api.http) = {
             get : "/region/{region_id}/project/{project_id}/user/{user_id}"
