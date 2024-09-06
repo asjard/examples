@@ -20,7 +20,7 @@ type ExamplesAPI struct {
 	client ExamplesClient
 }
 
-func (api *ExamplesAPI) Bootstrap() error {
+func (api *ExamplesAPI) Start() error {
 	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.readme.name", "readme")).Conn()
 	if err != nil {
 		return err
@@ -28,7 +28,7 @@ func (api *ExamplesAPI) Bootstrap() error {
 	api.client = NewExamplesClient(conn)
 	return nil
 }
-func (api *ExamplesAPI) Shutdown() {
+func (api *ExamplesAPI) Stop() {
 }
 
 // 注释，描述这个接口的作用
@@ -39,6 +39,11 @@ func (api *ExamplesAPI) Say(ctx context.Context, in *HelloReq) (*HelloReq, error
 // sse请求
 func (api *ExamplesAPI) Log(ctx context.Context, in *emptypb.Empty) (*emptypb.Empty, error) {
 	return api.client.Log(ctx, in)
+}
+
+// Hello Example
+func (api *ExamplesAPI) Hello(ctx context.Context, in *emptypb.Empty) (*HelloReq, error) {
+	return api.client.Hello(ctx, in)
 }
 func (api *ExamplesAPI) RestServiceDesc() *rest.ServiceDesc {
 	return &ExamplesRestServiceDesc

@@ -20,7 +20,7 @@ type FileAPI struct {
 	client FileClient
 }
 
-func (api *FileAPI) Bootstrap() error {
+func (api *FileAPI) Start() error {
 	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.file.name", "file")).Conn()
 	if err != nil {
 		return err
@@ -28,7 +28,7 @@ func (api *FileAPI) Bootstrap() error {
 	api.client = NewFileClient(conn)
 	return nil
 }
-func (api *FileAPI) Shutdown() {
+func (api *FileAPI) Stop() {
 }
 
 // 文件上传

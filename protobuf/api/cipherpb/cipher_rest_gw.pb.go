@@ -20,7 +20,7 @@ type CipherAPI struct {
 	client CipherClient
 }
 
-func (api *CipherAPI) Bootstrap() error {
+func (api *CipherAPI) Start() error {
 	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.cipher.name", "cipher")).Conn()
 	if err != nil {
 		return err
@@ -28,7 +28,7 @@ func (api *CipherAPI) Bootstrap() error {
 	api.client = NewCipherClient(conn)
 	return nil
 }
-func (api *CipherAPI) Shutdown() {
+func (api *CipherAPI) Stop() {
 }
 
 // 加密

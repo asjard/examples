@@ -10,7 +10,7 @@ asjard:
     rest:
       enabled: true
       openapi:
-        enabled: false
+        enabled: true
       cors:
         allowHeaders:
           - Authorization

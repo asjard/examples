@@ -20,9 +20,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Examples_Say_FullMethodName  = "/api.v1.readme.Examples/Say"
-	Examples_Log_FullMethodName  = "/api.v1.readme.Examples/Log"
-	Examples_Call_FullMethodName = "/api.v1.readme.Examples/Call"
+	Examples_Say_FullMethodName   = "/api.v1.readme.Examples/Say"
+	Examples_Log_FullMethodName   = "/api.v1.readme.Examples/Log"
+	Examples_Hello_FullMethodName = "/api.v1.readme.Examples/Hello"
+	Examples_Call_FullMethodName  = "/api.v1.readme.Examples/Call"
 )
 
 // ExamplesClient is the client API for Examples service.
@@ -33,6 +34,8 @@ type ExamplesClient interface {
 	Say(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloReq, error)
 	// sse请求
 	Log(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Hello Example
+	Hello(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HelloReq, error)
 	// grpc请求
 	Call(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloReq, error)
 }
@@ -63,6 +66,15 @@ func (c *examplesClient) Log(ctx context.Context, in *emptypb.Empty, opts ...grp
 	return out, nil
 }
 
+func (c *examplesClient) Hello(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HelloReq, error) {
+	out := new(HelloReq)
+	err := c.cc.Invoke(ctx, Examples_Hello_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *examplesClient) Call(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloReq, error) {
 	out := new(HelloReq)
 	err := c.cc.Invoke(ctx, Examples_Call_FullMethodName, in, out, opts...)
@@ -80,6 +92,8 @@ type ExamplesServer interface {
 	Say(context.Context, *HelloReq) (*HelloReq, error)
 	// sse请求
 	Log(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
+	// Hello Example
+	Hello(context.Context, *emptypb.Empty) (*HelloReq, error)
 	// grpc请求
 	Call(context.Context, *HelloReq) (*HelloReq, error)
 	mustEmbedUnimplementedExamplesServer()
@@ -94,6 +108,9 @@ func (UnimplementedExamplesServer) Say(context.Context, *HelloReq) (*HelloReq, e
 }
 func (UnimplementedExamplesServer) Log(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Log not implemented")
+}
+func (UnimplementedExamplesServer) Hello(context.Context, *emptypb.Empty) (*HelloReq, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
 }
 func (UnimplementedExamplesServer) Call(context.Context, *HelloReq) (*HelloReq, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Call not implemented")
@@ -147,6 +164,24 @@ func _Examples_Log_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Examples_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExamplesServer).Hello(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Examples_Hello_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExamplesServer).Hello(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Examples_Call_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HelloReq)
 	if err := dec(in); err != nil {
@@ -179,6 +214,10 @@ var Examples_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Log",
 			Handler:    _Examples_Log_Handler,
+		},
+		{
+			MethodName: "Hello",
+			Handler:    _Examples_Hello_Handler,
 		},
 		{
 			MethodName: "Call",

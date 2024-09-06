@@ -11,14 +11,12 @@ import (
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
 	_ "github.com/asjard/asjard/pkg/config/etcd"
-	_ "github.com/asjard/asjard/pkg/registry/consul"
-
-	_ "github.com/asjard/asjard/pkg/config/etcd"
 	_ "github.com/asjard/asjard/pkg/registry/etcd"
 
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/protobuf/api/cipherpb"
 	"github.com/asjard/examples/protobuf/api/mysqlpb"
+	"github.com/asjard/examples/protobuf/api/readmepb"
 	pb "github.com/asjard/examples/protobuf/api/serverpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -90,7 +88,8 @@ func main() {
 		exit:      server.Exit(),
 	},
 		&mysqlpb.MysqlAPI{},
-		&cipherpb.CipherAPI{})
+		&cipherpb.CipherAPI{},
+		&readmepb.ExamplesAPI{})
 	if err := server.Start(); err != nil {
 		panic(err)
 	}

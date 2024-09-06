@@ -20,7 +20,7 @@ type MysqlAPI struct {
 	client MysqlClient
 }
 
-func (api *MysqlAPI) Bootstrap() error {
+func (api *MysqlAPI) Start() error {
 	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.mysql.name", "mysql")).Conn()
 	if err != nil {
 		return err
@@ -28,7 +28,7 @@ func (api *MysqlAPI) Bootstrap() error {
 	api.client = NewMysqlClient(conn)
 	return nil
 }
-func (api *MysqlAPI) Shutdown() {
+func (api *MysqlAPI) Stop() {
 }
 
 // 创建

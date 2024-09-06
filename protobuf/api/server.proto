@@ -29,20 +29,6 @@ service Server {
             writer_name : "custome_writer"
         };
     };
-
-    // rest请求
-    // 多行注释
-    rpc Hello(google.protobuf.Empty) returns (HelloReq) {
-        option (asjard.api.http) = {
-            get : "/hello"
-        };
-        option (asjard.api.http) = {
-            get : "/hello"
-            api : "/"
-            version : "/"
-            group : "/"
-        };
-    };
     // sse请求
     rpc Log(google.protobuf.Empty) returns (google.protobuf.Empty) {
         option (asjard.api.http) = {

@@ -80,11 +80,6 @@ func (api *ServerAPI) Log(ctx context.Context, in *emptypb.Empty) (*emptypb.Empt
 }
 
 // Call 实时获取配置并返回
-func (api *ServerAPI) Hello(ctx context.Context, in *emptypb.Empty) (*serverpb.HelloReq, error) {
-	return &serverpb.HelloReq{RegionId: "hello"}, nil
-}
-
-// Call 实时获取配置并返回
 func (api *ServerAPI) Call(ctx context.Context, in *serverpb.HelloReq) (*serverpb.HelloReq, error) {
 	in.Configs = &serverpb.HelloReq_Configs{
 		KeyInDifferentSourcer: config.GetString("test_key", ""),

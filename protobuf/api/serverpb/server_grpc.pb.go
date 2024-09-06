@@ -20,10 +20,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Server_Say_FullMethodName   = "/api.v1.server.Server/Say"
-	Server_Hello_FullMethodName = "/api.v1.server.Server/Hello"
-	Server_Log_FullMethodName   = "/api.v1.server.Server/Log"
-	Server_Call_FullMethodName  = "/api.v1.server.Server/Call"
+	Server_Say_FullMethodName  = "/api.v1.server.Server/Say"
+	Server_Log_FullMethodName  = "/api.v1.server.Server/Log"
+	Server_Call_FullMethodName = "/api.v1.server.Server/Call"
 )
 
 // ServerClient is the client API for Server service.
@@ -32,9 +31,6 @@ const (
 type ServerClient interface {
 	// 注释，描述这个接口的作用
 	Say(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloReq, error)
-	// rest请求
-	// 多行注释
-	Hello(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HelloReq, error)
 	// sse请求
 	Log(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// grpc请求
@@ -52,15 +48,6 @@ func NewServerClient(cc grpc.ClientConnInterface) ServerClient {
 func (c *serverClient) Say(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloReq, error) {
 	out := new(HelloReq)
 	err := c.cc.Invoke(ctx, Server_Say_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serverClient) Hello(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HelloReq, error) {
-	out := new(HelloReq)
-	err := c.cc.Invoke(ctx, Server_Hello_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,9 +78,6 @@ func (c *serverClient) Call(ctx context.Context, in *HelloReq, opts ...grpc.Call
 type ServerServer interface {
 	// 注释，描述这个接口的作用
 	Say(context.Context, *HelloReq) (*HelloReq, error)
-	// rest请求
-	// 多行注释
-	Hello(context.Context, *emptypb.Empty) (*HelloReq, error)
 	// sse请求
 	Log(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	// grpc请求
@@ -107,9 +91,6 @@ type UnimplementedServerServer struct {
 
 func (UnimplementedServerServer) Say(context.Context, *HelloReq) (*HelloReq, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Say not implemented")
-}
-func (UnimplementedServerServer) Hello(context.Context, *emptypb.Empty) (*HelloReq, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
 }
 func (UnimplementedServerServer) Log(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Log not implemented")
@@ -144,24 +125,6 @@ func _Server_Say_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ServerServer).Say(ctx, req.(*HelloReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Server_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServerServer).Hello(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Server_Hello_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServerServer).Hello(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -212,10 +175,6 @@ var Server_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Say",
 			Handler:    _Server_Say_Handler,
-		},
-		{
-			MethodName: "Hello",
-			Handler:    _Server_Hello_Handler,
 		},
 		{
 			MethodName: "Log",
