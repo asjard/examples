@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v5.27.0
-// source: api/cipher.proto
+// source: api/cipherpb/cipher.proto
 
 package cipherpb
 
@@ -147,5 +147,5 @@ var Cipher_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/cipher.proto",
+	Metadata: "api/cipherpb/cipher.proto",
 }

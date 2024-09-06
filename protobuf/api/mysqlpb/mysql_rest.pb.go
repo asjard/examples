@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-rest v1.3.0
 // - protoc             v5.27.0
-// source: api/mysql.proto
+// source: api/mysqlpb/mysql.proto
 
 package mysqlpb
 
@@ -103,7 +103,7 @@ func _Mysql_Del_RestHandler(ctx *rest.Context, srv any, interceptor server.Unary
 var MysqlRestServiceDesc = rest.ServiceDesc{
 	ServiceName: "api.v1.mysql.Mysql",
 	HandlerType: (*MysqlServer)(nil),
-	OpenAPI:     file_api_mysql_proto_openapi,
+	OpenAPI:     file_api_mysqlpb_mysql_proto_openapi,
 	Methods: []rest.MethodDesc{
 		{
 			MethodName: "Create",
@@ -151,7 +151,7 @@ const (
 	Mysql_Del_RestPath    = "/api/v1/examples/mysqls/{name}"
 )
 
-var file_api_mysql_proto_openapi = []byte{
+var file_api_mysqlpb_mysql_proto_openapi = []byte{
 	0x0a, 0x05, 0x33, 0x2e, 0x30, 0x2e, 0x33, 0x12, 0x07, 0x32, 0x05, 0x30, 0x2e, 0x30, 0x2e, 0x31,
 	0x22, 0xb2, 0x0b, 0x0a, 0xe4, 0x04, 0x0a, 0x18, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x2f,
 	0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x73, 0x2f, 0x6d, 0x79, 0x73, 0x71, 0x6c, 0x73, 0x2f,

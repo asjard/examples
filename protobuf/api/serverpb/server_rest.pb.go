@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-rest v1.3.0
 // - protoc             v5.27.0
-// source: api/server.proto
+// source: api/serverpb/server.proto
 
 package serverpb
 
@@ -55,7 +55,7 @@ func _Server_Log_RestHandler(ctx *rest.Context, srv any, interceptor server.Unar
 var ServerRestServiceDesc = rest.ServiceDesc{
 	ServiceName: "api.v1.server.Server",
 	HandlerType: (*ServerServer)(nil),
-	OpenAPI:     file_api_server_proto_openapi,
+	OpenAPI:     file_api_serverpb_server_proto_openapi,
 	Methods: []rest.MethodDesc{
 		{
 			MethodName: "Say",
@@ -96,7 +96,7 @@ const (
 	Server_Log_RestPath   = "/api/v1/examples/servers/log"
 )
 
-var file_api_server_proto_openapi = []byte{
+var file_api_serverpb_server_proto_openapi = []byte{
 	0x0a, 0x05, 0x33, 0x2e, 0x30, 0x2e, 0x33, 0x12, 0x07, 0x32, 0x05, 0x30, 0x2e, 0x30, 0x2e, 0x31,
 	0x22, 0x85, 0x23, 0x0a, 0xd1, 0x01, 0x0a, 0x1c, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x2f,
 	0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x73, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x73,

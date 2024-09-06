@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v5.27.0
-// source: api/readme.proto
+// source: api/readmepb/readme.proto
 
 package readmepb
 
@@ -225,5 +225,5 @@ var Examples_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/readme.proto",
+	Metadata: "api/readmepb/readme.proto",
 }
