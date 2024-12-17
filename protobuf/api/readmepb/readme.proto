@@ -5,6 +5,7 @@ package api.v1.readme;
 option go_package = "github.com/asjard/examples/protobuf/api/readmepb";
 
 import "github.com/asjard/protobuf/http.proto";
+import "github.com/asjard/protobuf/validate.proto";
 import "google/protobuf/empty.proto";
 
 service Examples {
@@ -73,9 +74,9 @@ message HelloReq {
     // 配置
     Configs configs = 8;
     // 分页
-    int32 page = 9;
+    int32 page = 9 [ (asjard.api.validate).rules = "min=1" ];
     // 每页大小
-    int32 size = 10;
+    int32 size = 10 [ (asjard.api.validate).rules = "max=200" ];
     // 排序
     string sort = 11;
     // 布尔类型

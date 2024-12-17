@@ -10,9 +10,12 @@ asjard:
       enabled: false
       addresses:
         listen: 0.0.0.0:6032
+    asynq:
+      enabled: true
     ## rest(HTTP)协议相关配置
     rest:
       enabled: true
+      interceptors: validate
       i18n:
         enabled: false
       openapi:

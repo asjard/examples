@@ -57,6 +57,18 @@ services:
       - example
     ports:
       - 6379:6379
+  asynq-webui:
+    image: hibiken/asynqmon:latest
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+    networks:
+      - example
+    ports:
+      - 8088:8080
   jeager:
     image: jaegertracing/all-in-one:latest
     restart: always

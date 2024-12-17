@@ -1,0 +1,6 @@
+asjard:
+  logger:
+    accessLog:
+      enabled: true
+  trace:
+    enabled: true

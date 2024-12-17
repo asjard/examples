@@ -24,6 +24,16 @@ go_rest_out() {
     [[ "$protoc_out" =~ "--go-rest_out=" ]] || protoc_out="$protoc_out --go-rest_out=${GOPATH}/src"
 }
 
+go_asynq_out() {
+    go_grpc_out
+    [[ "$protoc_out" =~ "--go-asynq_out=" ]] || protoc_out="$protoc_out --go-asynq_out=${GOPATH}/src"
+}
+
+go_validate_out() {
+    go_out
+    [[ "$protoc_out" =~ "--go-validate_out=" ]] || protoc_out="$protoc_out --go-validate_out=${GOPATH}/src"
+}
+
 go_rest_gw_out() {
     go_rest_out
     [[ "$protoc_out" =~ "--go-rest2grpc-gw_out=" ]] || protoc_out="$protoc_out --go-rest2grpc-gw_out=${GOPATH}/src"
@@ -39,6 +49,14 @@ fi
 
 if [ "$GEN_PROTO_GO_REST" == "true" ];then
     go_rest_out
+fi
+
+if [ "$GEN_PROTO_GO_ASYNQ" == "true" ];then
+    go_asynq_out
+fi
+
+if [ "$GEN_PROTO_GO_VALIDATE" == "true" ];then
+    go_validate_out
 fi
 
 if [ "$GEN_PROTO_GO_REST_GW" == "true" ];then

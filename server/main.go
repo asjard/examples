@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/asjard/asjard/core/config"
 	"github.com/asjard/asjard/core/logger"
 	"github.com/asjard/asjard/core/status"
+	"github.com/hibiken/asynq"
 
 	// 加载etcd配置源
 	_ "github.com/asjard/asjard/pkg/config/etcd"
@@ -19,6 +21,8 @@ import (
 	_ "github.com/asjard/asjard/pkg/registry/etcd"
 	// 加载grpc服务
 	"github.com/asjard/asjard/pkg/server/grpc"
+	"github.com/asjard/asjard/pkg/server/xasynq"
+
 	// 加载rest服务
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/protobuf/api/serverpb"
@@ -27,11 +31,13 @@ import (
 
 type ServerAPI struct {
 	serverpb.UnimplementedServerServer
-	exit   <-chan struct{}
-	client serverpb.ServerClient
+	exit        <-chan struct{}
+	client      serverpb.ServerClient
+	asynqClient *asynq.Client
 }
 
 var _ bootstrap.Initiator = &ServerAPI{}
+var _ xasynq.Handler = &ServerAPI{}
 
 // Bootstrap 服务启动前会自动调用这个方法
 // 当前这个方法内初始化了grpc客户端
@@ -41,6 +47,11 @@ func (api *ServerAPI) Start() error {
 		return err
 	}
 	api.client = serverpb.NewServerClient(conn)
+	redisConn, err := xasynq.NewRedisConn("")
+	if err != nil {
+		return err
+	}
+	api.asynqClient = asynq.NewClient(redisConn)
 	return nil
 }
 
@@ -84,7 +95,25 @@ func (api *ServerAPI) Call(ctx context.Context, in *serverpb.HelloReq) (*serverp
 	in.Configs = &serverpb.HelloReq_Configs{
 		KeyInDifferentSourcer: config.GetString("test_key", ""),
 	}
+	payload, err := json.Marshal(in)
+	if err != nil {
+		logger.Error("marshal fail", "err", err)
+		return nil, status.InternalServerError()
+	}
+	// 添加异步任务
+	taskInfo, err := api.asynqClient.EnqueueContext(ctx,
+		asynq.NewTask(xasynq.Pattern(serverpb.Server_Asynq_FullMethodName), payload))
+	if err != nil {
+		logger.Error("asynq enqueue fail", "err", err)
+		return nil, status.InternalServerError()
+	}
+	logger.Debug("add asynq task info", "task_info", taskInfo)
 	return in, nil
+}
+
+func (api *ServerAPI) Asynq(ctx context.Context, in *serverpb.HelloReq) (*emptypb.Empty, error) {
+	logger.Info("----------asynq message recived----", "ctx", fmt.Sprintf("%T", ctx), "in", in.String())
+	return nil, nil
 }
 
 // GrpcServiceDesc 提供grpc服务,需要实现这个方法
@@ -97,12 +126,17 @@ func (api *ServerAPI) RestServiceDesc() *rest.ServiceDesc {
 	return &serverpb.ServerRestServiceDesc
 }
 
+// AsynqServiceDesc asynq消费需要实现的方法
+func (api *ServerAPI) AsynqServiceDesc() *xasynq.ServiceDesc {
+	return &serverpb.ServerAsynqServiceDesc
+}
+
 func main() {
 	server := asjard.New()
 	// 添加grpc和rest服务
 	server.AddHandler(&ServerAPI{
 		exit: server.Exit(),
-	}, rest.Protocol, grpc.Protocol)
+	}, rest.Protocol, grpc.Protocol, xasynq.Protocol)
 	// 启动服务
 	if err := server.Start(); err != nil {
 		panic(err)

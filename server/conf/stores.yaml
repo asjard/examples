@@ -10,3 +10,7 @@ asjard:
         default:
           endpoints:
             - "etcd:2379"
+    redis:
+      clients:
+        default:
+          address: redis:6379

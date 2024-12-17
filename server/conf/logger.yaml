@@ -1,5 +1,6 @@
 asjard:
   logger:
-    level: INFO
+    level: DEBUG
     accessLog:
       enabled: true
+      # filePath: log/${asjard.service.instance.name}_access.log

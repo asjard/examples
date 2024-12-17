@@ -20,9 +20,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Server_Say_FullMethodName  = "/api.v1.server.Server/Say"
-	Server_Log_FullMethodName  = "/api.v1.server.Server/Log"
-	Server_Call_FullMethodName = "/api.v1.server.Server/Call"
+	Server_Say_FullMethodName   = "/api.v1.server.Server/Say"
+	Server_Log_FullMethodName   = "/api.v1.server.Server/Log"
+	Server_Call_FullMethodName  = "/api.v1.server.Server/Call"
+	Server_Asynq_FullMethodName = "/api.v1.server.Server/Asynq"
 )
 
 // ServerClient is the client API for Server service.
@@ -35,6 +36,8 @@ type ServerClient interface {
 	Log(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// grpc请求
 	Call(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloReq, error)
+	// 通过asynq接收异步请求
+	Asynq(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type serverClient struct {
@@ -72,6 +75,15 @@ func (c *serverClient) Call(ctx context.Context, in *HelloReq, opts ...grpc.Call
 	return out, nil
 }
 
+func (c *serverClient) Asynq(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Server_Asynq_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServerServer is the server API for Server service.
 // All implementations must embed UnimplementedServerServer
 // for forward compatibility
@@ -82,6 +94,8 @@ type ServerServer interface {
 	Log(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	// grpc请求
 	Call(context.Context, *HelloReq) (*HelloReq, error)
+	// 通过asynq接收异步请求
+	Asynq(context.Context, *HelloReq) (*emptypb.Empty, error)
 	mustEmbedUnimplementedServerServer()
 }
 
@@ -97,6 +111,9 @@ func (UnimplementedServerServer) Log(context.Context, *emptypb.Empty) (*emptypb.
 }
 func (UnimplementedServerServer) Call(context.Context, *HelloReq) (*HelloReq, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Call not implemented")
+}
+func (UnimplementedServerServer) Asynq(context.Context, *HelloReq) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Asynq not implemented")
 }
 func (UnimplementedServerServer) mustEmbedUnimplementedServerServer() {}
 
@@ -165,6 +182,24 @@ func _Server_Call_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Server_Asynq_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HelloReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServerServer).Asynq(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Server_Asynq_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServerServer).Asynq(ctx, req.(*HelloReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Server_ServiceDesc is the grpc.ServiceDesc for Server service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -183,6 +218,10 @@ var Server_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Call",
 			Handler:    _Server_Call_Handler,
+		},
+		{
+			MethodName: "Asynq",
+			Handler:    _Server_Asynq_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
