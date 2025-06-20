@@ -14,7 +14,6 @@ import (
 	"github.com/asjard/asjard/core/runtime"
 	"github.com/asjard/asjard/core/status"
 	_ "github.com/asjard/asjard/pkg/config/etcd"
-	"github.com/asjard/asjard/pkg/protobuf/requestpb"
 	_ "github.com/asjard/asjard/pkg/registry/etcd"
 	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
@@ -97,17 +96,6 @@ func (api *ServerAPI) Call(ctx context.Context, in *readmepb.HelloReq) (*readmep
 		SystemCode: app.Instance.SystemCode,
 		Metadata:   app.Instance.MetaData,
 	}
-	reqWithPage := &requestpb.ReqWithPage{
-		Page: in.Page,
-		Size: in.Size,
-		Sort: in.Sort,
-	}
-	if err := reqWithPage.IsValid(20, []string{"created_at", "updated_at"}); err != nil {
-		return nil, err
-	}
-	in.Page = reqWithPage.Page
-	in.Size = reqWithPage.Size
-	in.Sort = reqWithPage.Sort
 	return in, nil
 }
 

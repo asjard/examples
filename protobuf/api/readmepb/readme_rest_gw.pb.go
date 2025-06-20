@@ -21,7 +21,7 @@ type ExamplesAPI struct {
 }
 
 func (api *ExamplesAPI) Start() error {
-	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.readme.name", "readme")).Conn()
+	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.readme.name", "svc-readme")).Conn()
 	if err != nil {
 		return err
 	}

@@ -93,7 +93,7 @@ func (t ExampleTable) Search(ctx context.Context, in *pb.SearchReq) (*pb.Example
 	var total int64
 	db.Model(&ExampleTable{}).Count(&total)
 	records := make([]ExampleTable, 0, in.Size)
-	db.Scopes(requestpb.ReqWithPageGormScope(in.Page, in.Size, in.Sort)).Find(&records)
+	db.Scopes(requestpb.ReqWithPageGormScope(in.Page, in.Size, in.Sort, "created_at")).Find(&records)
 	exampleInfos := make([]*pb.ExampleInfo, 0, in.Size)
 	for _, record := range records {
 		exampleInfos = append(exampleInfos, record.info())

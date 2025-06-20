@@ -2,3 +2,4 @@ bin/
 ._*
 Makefile_gen*
 log/
+*.pb.go

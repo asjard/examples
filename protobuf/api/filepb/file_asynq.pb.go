@@ -8,13 +8,86 @@ package filepb
 
 import (
 	context "context"
+	bootstrap "github.com/asjard/asjard/core/bootstrap"
 	server "github.com/asjard/asjard/core/server"
 	xasynq "github.com/asjard/asjard/pkg/server/xasynq"
+	asynq "github.com/hibiken/asynq"
+	proto "google.golang.org/protobuf/proto"
+	sync "sync"
 )
+
+type FileAsynqClientOptions struct {
+	clientName string
+}
+type FileAsynqClientOption func(opts *FileAsynqClientOptions)
+
+func FileAsynqClientWithRedis(clientName string) FileAsynqClientOption {
+	return func(opts *FileAsynqClientOptions) {
+		if clientName != "" {
+			opts.clientName = clientName
+		}
+	}
+}
+
+type FileAsynqClient struct {
+	*asynq.Client
+	options *FileAsynqClientOptions
+}
+
+var (
+	fileAsynqClient     *FileAsynqClient
+	fileAsynqClientOnce sync.Once
+)
+
+func NewFileAsynqClient(opts ...FileAsynqClientOption) *FileAsynqClient {
+	fileAsynqClientOnce.Do(func() {
+		options := &FileAsynqClientOptions{
+			clientName: "default",
+		}
+		for _, opt := range opts {
+			opt(options)
+		}
+		fileAsynqClient = &FileAsynqClient{
+			options: options,
+		}
+		bootstrap.AddBootstrap(fileAsynqClient)
+	})
+	return fileAsynqClient
+}
+func (c *FileAsynqClient) Start() error {
+	conn, err := xasynq.NewRedisConn(c.options.clientName)
+	if err != nil {
+		return err
+	}
+	c.Client = asynq.NewClient(conn)
+	return nil
+}
+func (c *FileAsynqClient) Stop() {}
+
+// 文件上传
+func (c *FileAsynqClient) Upload(ctx context.Context, in *UploadReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(File_Upload_FullMethodName), payload, opts...), opts...)
+}
+
+// 文件下载
+func (c *FileAsynqClient) Download(ctx context.Context, in *DownloadReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(File_Download_FullMethodName), payload, opts...), opts...)
+}
 
 // 文件上传
 func _File_Upload_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(UploadReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(FileServer).Upload(ctx, in)
 	}
@@ -32,6 +105,9 @@ func _File_Upload_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.
 // 文件下载
 func _File_Download_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(DownloadReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(FileServer).Download(ctx, in)
 	}

@@ -52,10 +52,10 @@ func (model *ExampleModel) Create(ctx context.Context, in *pb.CreateOrUpdateReq)
 	// 创建需要提前分配缓存Key
 	// 如果是按照主键ID缓存的，提前生成主键ID，创建记录使用提前生成的主键ID创建记录
 	if err := model.SetData(ctx,
-		model.kvCache.WithGroup(model.searchGroup()).WithKey(model.getCacheKey(in.Name)),
 		func() error {
 			return model.ExampleTable.Create(ctx, in)
-		}); err != nil {
+		},
+		model.kvCache.WithGroup(model.searchGroup()).WithKey(model.getCacheKey(in.Name))); err != nil {
 		return err
 	}
 	return nil
@@ -63,13 +63,13 @@ func (model *ExampleModel) Create(ctx context.Context, in *pb.CreateOrUpdateReq)
 
 func (model *ExampleModel) Update(ctx context.Context, in *pb.CreateOrUpdateReq) (*pb.ExampleInfo, error) {
 	if err := model.SetData(ctx,
-		model.kvCache.WithGroup(model.searchGroup()).WithKey(model.getCacheKey(in.Name)),
 		func() error {
 			if _, err := model.ExampleTable.Update(ctx, in); err != nil {
 				return err
 			}
 			return nil
-		}); err != nil {
+		},
+		model.kvCache.WithGroup(model.searchGroup()).WithKey(model.getCacheKey(in.Name))); err != nil {
 		return nil, err
 	}
 	return model.Get(ctx, &pb.ReqWithName{Name: in.Name})
@@ -102,10 +102,10 @@ func (model *ExampleModel) Search(ctx context.Context, in *pb.SearchReq) (*pb.Ex
 
 func (model *ExampleModel) Del(ctx context.Context, in *pb.ReqWithName) error {
 	return model.SetData(ctx,
-		model.kvCache.WithKey(model.getCacheKey(in.Name)).WithGroup(model.searchGroup()),
 		func() error {
 			return model.ExampleTable.Del(ctx, in)
-		})
+		},
+		model.kvCache.WithKey(model.getCacheKey(in.Name)).WithGroup(model.searchGroup()))
 }
 
 func (model *ExampleModel) searchGroup() string {

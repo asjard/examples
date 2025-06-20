@@ -8,14 +8,87 @@ package cipherpb
 
 import (
 	context "context"
+	bootstrap "github.com/asjard/asjard/core/bootstrap"
 	server "github.com/asjard/asjard/core/server"
 	xasynq "github.com/asjard/asjard/pkg/server/xasynq"
+	asynq "github.com/hibiken/asynq"
+	proto "google.golang.org/protobuf/proto"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	sync "sync"
 )
+
+type CipherAsynqClientOptions struct {
+	clientName string
+}
+type CipherAsynqClientOption func(opts *CipherAsynqClientOptions)
+
+func CipherAsynqClientWithRedis(clientName string) CipherAsynqClientOption {
+	return func(opts *CipherAsynqClientOptions) {
+		if clientName != "" {
+			opts.clientName = clientName
+		}
+	}
+}
+
+type CipherAsynqClient struct {
+	*asynq.Client
+	options *CipherAsynqClientOptions
+}
+
+var (
+	cipherAsynqClient     *CipherAsynqClient
+	cipherAsynqClientOnce sync.Once
+)
+
+func NewCipherAsynqClient(opts ...CipherAsynqClientOption) *CipherAsynqClient {
+	cipherAsynqClientOnce.Do(func() {
+		options := &CipherAsynqClientOptions{
+			clientName: "default",
+		}
+		for _, opt := range opts {
+			opt(options)
+		}
+		cipherAsynqClient = &CipherAsynqClient{
+			options: options,
+		}
+		bootstrap.AddBootstrap(cipherAsynqClient)
+	})
+	return cipherAsynqClient
+}
+func (c *CipherAsynqClient) Start() error {
+	conn, err := xasynq.NewRedisConn(c.options.clientName)
+	if err != nil {
+		return err
+	}
+	c.Client = asynq.NewClient(conn)
+	return nil
+}
+func (c *CipherAsynqClient) Stop() {}
+
+// 加密
+func (c *CipherAsynqClient) Encrypt(ctx context.Context, in *EncryptReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Cipher_Encrypt_FullMethodName), payload, opts...), opts...)
+}
+
+// 解密
+func (c *CipherAsynqClient) Decrypt(ctx context.Context, in *emptypb.Empty, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Cipher_Decrypt_FullMethodName), payload, opts...), opts...)
+}
 
 // 加密
 func _Cipher_Encrypt_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(EncryptReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(CipherServer).Encrypt(ctx, in)
 	}
@@ -33,6 +106,9 @@ func _Cipher_Encrypt_AsynqHandler(ctx *xasynq.Context, srv any, interceptor serv
 // 解密
 func _Cipher_Decrypt_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(emptypb.Empty)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(CipherServer).Decrypt(ctx, in)
 	}

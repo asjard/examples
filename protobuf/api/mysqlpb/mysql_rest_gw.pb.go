@@ -21,7 +21,7 @@ type MysqlAPI struct {
 }
 
 func (api *MysqlAPI) Start() error {
-	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.mysql.name", "mysql")).Conn()
+	conn, err := client.NewClient(grpc.Protocol, config.GetString("asjard.topology.services.mysql.name", "svc-mysql")).Conn()
 	if err != nil {
 		return err
 	}

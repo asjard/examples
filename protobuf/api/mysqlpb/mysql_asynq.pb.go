@@ -8,13 +8,113 @@ package mysqlpb
 
 import (
 	context "context"
+	bootstrap "github.com/asjard/asjard/core/bootstrap"
 	server "github.com/asjard/asjard/core/server"
 	xasynq "github.com/asjard/asjard/pkg/server/xasynq"
+	asynq "github.com/hibiken/asynq"
+	proto "google.golang.org/protobuf/proto"
+	sync "sync"
 )
+
+type MysqlAsynqClientOptions struct {
+	clientName string
+}
+type MysqlAsynqClientOption func(opts *MysqlAsynqClientOptions)
+
+func MysqlAsynqClientWithRedis(clientName string) MysqlAsynqClientOption {
+	return func(opts *MysqlAsynqClientOptions) {
+		if clientName != "" {
+			opts.clientName = clientName
+		}
+	}
+}
+
+type MysqlAsynqClient struct {
+	*asynq.Client
+	options *MysqlAsynqClientOptions
+}
+
+var (
+	mysqlAsynqClient     *MysqlAsynqClient
+	mysqlAsynqClientOnce sync.Once
+)
+
+func NewMysqlAsynqClient(opts ...MysqlAsynqClientOption) *MysqlAsynqClient {
+	mysqlAsynqClientOnce.Do(func() {
+		options := &MysqlAsynqClientOptions{
+			clientName: "default",
+		}
+		for _, opt := range opts {
+			opt(options)
+		}
+		mysqlAsynqClient = &MysqlAsynqClient{
+			options: options,
+		}
+		bootstrap.AddBootstrap(mysqlAsynqClient)
+	})
+	return mysqlAsynqClient
+}
+func (c *MysqlAsynqClient) Start() error {
+	conn, err := xasynq.NewRedisConn(c.options.clientName)
+	if err != nil {
+		return err
+	}
+	c.Client = asynq.NewClient(conn)
+	return nil
+}
+func (c *MysqlAsynqClient) Stop() {}
+
+// 创建
+func (c *MysqlAsynqClient) Create(ctx context.Context, in *CreateOrUpdateReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Mysql_Create_FullMethodName), payload, opts...), opts...)
+}
+
+// 更新
+func (c *MysqlAsynqClient) Update(ctx context.Context, in *CreateOrUpdateReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Mysql_Update_FullMethodName), payload, opts...), opts...)
+}
+
+// 获取详情
+func (c *MysqlAsynqClient) Get(ctx context.Context, in *ReqWithName, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Mysql_Get_FullMethodName), payload, opts...), opts...)
+}
+
+// 查询
+func (c *MysqlAsynqClient) Search(ctx context.Context, in *SearchReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Mysql_Search_FullMethodName), payload, opts...), opts...)
+}
+
+// 删除
+func (c *MysqlAsynqClient) Del(ctx context.Context, in *ReqWithName, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Mysql_Del_FullMethodName), payload, opts...), opts...)
+}
 
 // 创建
 func _Mysql_Create_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(CreateOrUpdateReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(MysqlServer).Create(ctx, in)
 	}
@@ -32,6 +132,9 @@ func _Mysql_Create_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server
 // 更新
 func _Mysql_Update_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(CreateOrUpdateReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(MysqlServer).Update(ctx, in)
 	}
@@ -49,6 +152,9 @@ func _Mysql_Update_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server
 // 获取详情
 func _Mysql_Get_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(ReqWithName)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(MysqlServer).Get(ctx, in)
 	}
@@ -66,6 +172,9 @@ func _Mysql_Get_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.Un
 // 查询
 func _Mysql_Search_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(SearchReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(MysqlServer).Search(ctx, in)
 	}
@@ -83,6 +192,9 @@ func _Mysql_Search_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server
 // 删除
 func _Mysql_Del_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(ReqWithName)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(MysqlServer).Del(ctx, in)
 	}

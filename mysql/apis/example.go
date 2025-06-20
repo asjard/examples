@@ -3,7 +3,6 @@ package apis
 import (
 	"context"
 
-	"github.com/asjard/asjard/pkg/protobuf/requestpb"
 	"github.com/asjard/asjard/pkg/server/grpc"
 	"github.com/asjard/asjard/pkg/server/rest"
 	"github.com/asjard/examples/mysql/models"
@@ -47,17 +46,6 @@ func (api *ExampleAPI) Get(ctx context.Context, in *pb.ReqWithName) (*pb.Example
 
 // 查询
 func (api *ExampleAPI) Search(ctx context.Context, in *pb.SearchReq) (*pb.ExampleList, error) {
-	reqWithPage := &requestpb.ReqWithPage{
-		Page: in.Page,
-		Size: in.Size,
-		Sort: in.Sort,
-	}
-	if err := reqWithPage.IsValid(20, []string{"created_at", "updated_at"}); err != nil {
-		return nil, err
-	}
-	in.Page = reqWithPage.Page
-	in.Size = reqWithPage.Size
-	in.Sort = reqWithPage.Sort
 	return api.exampleModel.Search(ctx, in)
 }
 

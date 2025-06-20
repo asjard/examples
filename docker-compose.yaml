@@ -29,7 +29,7 @@ services:
       - example
     ports:
       - 8080:8080
-  mariadb:
+  mysql:
     image: mariadb
     restart: always
     logging:

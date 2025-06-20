@@ -8,14 +8,105 @@ package serverpb
 
 import (
 	context "context"
+	bootstrap "github.com/asjard/asjard/core/bootstrap"
 	server "github.com/asjard/asjard/core/server"
 	xasynq "github.com/asjard/asjard/pkg/server/xasynq"
+	asynq "github.com/hibiken/asynq"
+	proto "google.golang.org/protobuf/proto"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	sync "sync"
 )
+
+type ServerAsynqClientOptions struct {
+	clientName string
+}
+type ServerAsynqClientOption func(opts *ServerAsynqClientOptions)
+
+func ServerAsynqClientWithRedis(clientName string) ServerAsynqClientOption {
+	return func(opts *ServerAsynqClientOptions) {
+		if clientName != "" {
+			opts.clientName = clientName
+		}
+	}
+}
+
+type ServerAsynqClient struct {
+	*asynq.Client
+	options *ServerAsynqClientOptions
+}
+
+var (
+	serverAsynqClient     *ServerAsynqClient
+	serverAsynqClientOnce sync.Once
+)
+
+func NewServerAsynqClient(opts ...ServerAsynqClientOption) *ServerAsynqClient {
+	serverAsynqClientOnce.Do(func() {
+		options := &ServerAsynqClientOptions{
+			clientName: "default",
+		}
+		for _, opt := range opts {
+			opt(options)
+		}
+		serverAsynqClient = &ServerAsynqClient{
+			options: options,
+		}
+		bootstrap.AddBootstrap(serverAsynqClient)
+	})
+	return serverAsynqClient
+}
+func (c *ServerAsynqClient) Start() error {
+	conn, err := xasynq.NewRedisConn(c.options.clientName)
+	if err != nil {
+		return err
+	}
+	c.Client = asynq.NewClient(conn)
+	return nil
+}
+func (c *ServerAsynqClient) Stop() {}
+
+// 注释，描述这个接口的作用
+func (c *ServerAsynqClient) Say(ctx context.Context, in *HelloReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Server_Say_FullMethodName), payload, opts...), opts...)
+}
+
+// sse请求
+func (c *ServerAsynqClient) Log(ctx context.Context, in *emptypb.Empty, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Server_Log_FullMethodName), payload, opts...), opts...)
+}
+
+// grpc请求
+func (c *ServerAsynqClient) Call(ctx context.Context, in *HelloReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Server_Call_FullMethodName), payload, opts...), opts...)
+}
+
+// 通过asynq接收异步请求
+func (c *ServerAsynqClient) Asynq(ctx context.Context, in *HelloReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Server_Asynq_FullMethodName), payload, opts...), opts...)
+}
 
 // 注释，描述这个接口的作用
 func _Server_Say_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(HelloReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(ServerServer).Say(ctx, in)
 	}
@@ -33,6 +124,9 @@ func _Server_Say_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.U
 // sse请求
 func _Server_Log_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(emptypb.Empty)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(ServerServer).Log(ctx, in)
 	}
@@ -50,6 +144,9 @@ func _Server_Log_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.U
 // grpc请求
 func _Server_Call_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(HelloReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(ServerServer).Call(ctx, in)
 	}
@@ -67,6 +164,9 @@ func _Server_Call_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.
 // 通过asynq接收异步请求
 func _Server_Asynq_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(HelloReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(ServerServer).Asynq(ctx, in)
 	}

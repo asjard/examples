@@ -8,14 +8,105 @@ package readmepb
 
 import (
 	context "context"
+	bootstrap "github.com/asjard/asjard/core/bootstrap"
 	server "github.com/asjard/asjard/core/server"
 	xasynq "github.com/asjard/asjard/pkg/server/xasynq"
+	asynq "github.com/hibiken/asynq"
+	proto "google.golang.org/protobuf/proto"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	sync "sync"
 )
+
+type ExamplesAsynqClientOptions struct {
+	clientName string
+}
+type ExamplesAsynqClientOption func(opts *ExamplesAsynqClientOptions)
+
+func ExamplesAsynqClientWithRedis(clientName string) ExamplesAsynqClientOption {
+	return func(opts *ExamplesAsynqClientOptions) {
+		if clientName != "" {
+			opts.clientName = clientName
+		}
+	}
+}
+
+type ExamplesAsynqClient struct {
+	*asynq.Client
+	options *ExamplesAsynqClientOptions
+}
+
+var (
+	examplesAsynqClient     *ExamplesAsynqClient
+	examplesAsynqClientOnce sync.Once
+)
+
+func NewExamplesAsynqClient(opts ...ExamplesAsynqClientOption) *ExamplesAsynqClient {
+	examplesAsynqClientOnce.Do(func() {
+		options := &ExamplesAsynqClientOptions{
+			clientName: "default",
+		}
+		for _, opt := range opts {
+			opt(options)
+		}
+		examplesAsynqClient = &ExamplesAsynqClient{
+			options: options,
+		}
+		bootstrap.AddBootstrap(examplesAsynqClient)
+	})
+	return examplesAsynqClient
+}
+func (c *ExamplesAsynqClient) Start() error {
+	conn, err := xasynq.NewRedisConn(c.options.clientName)
+	if err != nil {
+		return err
+	}
+	c.Client = asynq.NewClient(conn)
+	return nil
+}
+func (c *ExamplesAsynqClient) Stop() {}
+
+// 注释，描述这个接口的作用
+func (c *ExamplesAsynqClient) Say(ctx context.Context, in *HelloReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Examples_Say_FullMethodName), payload, opts...), opts...)
+}
+
+// sse请求
+func (c *ExamplesAsynqClient) Log(ctx context.Context, in *emptypb.Empty, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Examples_Log_FullMethodName), payload, opts...), opts...)
+}
+
+// Hello Example
+func (c *ExamplesAsynqClient) Hello(ctx context.Context, in *emptypb.Empty, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Examples_Hello_FullMethodName), payload, opts...), opts...)
+}
+
+// grpc请求
+func (c *ExamplesAsynqClient) Call(ctx context.Context, in *HelloReq, opts ...asynq.Option) (*asynq.TaskInfo, error) {
+	payload, err := proto.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return c.EnqueueContext(ctx, asynq.NewTask(xasynq.Pattern(Examples_Call_FullMethodName), payload, opts...), opts...)
+}
 
 // 注释，描述这个接口的作用
 func _Examples_Say_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(HelloReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(ExamplesServer).Say(ctx, in)
 	}
@@ -33,6 +124,9 @@ func _Examples_Say_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server
 // sse请求
 func _Examples_Log_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(emptypb.Empty)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(ExamplesServer).Log(ctx, in)
 	}
@@ -50,6 +144,9 @@ func _Examples_Log_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server
 // Hello Example
 func _Examples_Hello_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(emptypb.Empty)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(ExamplesServer).Hello(ctx, in)
 	}
@@ -67,6 +164,9 @@ func _Examples_Hello_AsynqHandler(ctx *xasynq.Context, srv any, interceptor serv
 // grpc请求
 func _Examples_Call_AsynqHandler(ctx *xasynq.Context, srv any, interceptor server.UnaryServerInterceptor) (any, error) {
 	in := new(HelloReq)
+	if err := proto.Unmarshal(ctx.Payload(), in); err != nil {
+		return nil, err
+	}
 	if interceptor == nil {
 		return srv.(ExamplesServer).Call(ctx, in)
 	}
